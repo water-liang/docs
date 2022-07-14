@@ -98,7 +98,7 @@ metadata:
   name: ovn-vpc-nat-gw-config
   namespace: kube-system
 data:
-  image: 'kubeovn/vpc-nat-gateway:v1.10.3' 
+  image: 'kubeovn/vpc-nat-gateway:v1.11.0' 
   enable-vpc-nat-gw: 'true'
 </code></pre> <ul> <li><code>image</code>: The image used by the Gateway Pod.</li> <li><code>enable-vpc-nat-gw</code>: Controls whether the VPC Gateway feature is enabled.</li> </ul> <h3 id=create-vpc-gateway-and-set-the-default-route>Create VPC Gateway and Set the Default Route<a class=headerlink href=#create-vpc-gateway-and-set-the-default-route title="Permanent link">&para;</a></h3> <pre><code class=language-yaml>kind: VpcNatGateway
 apiVersion: kubeovn.io/v1
