@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
          <loc>.</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/"/>
@@ -10,7 +10,7 @@
     </url>
     <url>
          <loc>contact/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/contact/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/contact/"/>
@@ -18,7 +18,7 @@
     </url>
     <url>
          <loc>advance/dhcp/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/dhcp/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/dhcp/"/>
@@ -26,7 +26,7 @@
     </url>
     <url>
          <loc>advance/dpdk/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/dpdk/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/dpdk/"/>
@@ -34,7 +34,7 @@
     </url>
     <url>
          <loc>advance/external-gateway/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/external-gateway/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/external-gateway/"/>
@@ -42,7 +42,7 @@
     </url>
     <url>
          <loc>advance/fastpath/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/fastpath/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/fastpath/"/>
@@ -50,7 +50,7 @@
     </url>
     <url>
          <loc>advance/multi-nic/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/multi-nic/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/multi-nic/"/>
@@ -58,7 +58,7 @@
     </url>
     <url>
          <loc>advance/offload-corigine/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/offload-corigine/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/offload-corigine/"/>
@@ -66,7 +66,7 @@
     </url>
     <url>
          <loc>advance/offload-mellanox/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/offload-mellanox/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/offload-mellanox/"/>
@@ -74,7 +74,7 @@
     </url>
     <url>
          <loc>advance/overlay-with-route/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/overlay-with-route/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/overlay-with-route/"/>
@@ -82,7 +82,7 @@
     </url>
     <url>
          <loc>advance/performance-tuning/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/performance-tuning/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/performance-tuning/"/>
@@ -90,7 +90,7 @@
     </url>
     <url>
          <loc>advance/vip/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/vip/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/vip/"/>
@@ -98,7 +98,7 @@
     </url>
     <url>
          <loc>advance/vpc-peering/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/vpc-peering/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/vpc-peering/"/>
@@ -106,7 +106,7 @@
     </url>
     <url>
          <loc>advance/windows/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/windows/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/windows/"/>
@@ -114,7 +114,7 @@
     </url>
     <url>
          <loc>advance/with-bgp/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/with-bgp/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/with-bgp/"/>
@@ -122,7 +122,7 @@
     </url>
     <url>
          <loc>advance/with-cilium/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/with-cilium/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/with-cilium/"/>
@@ -130,7 +130,7 @@
     </url>
     <url>
          <loc>advance/with-openstack/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/with-openstack/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/with-openstack/"/>
@@ -138,7 +138,7 @@
     </url>
     <url>
          <loc>advance/with-ovn-ic/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/with-ovn-ic/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/with-ovn-ic/"/>
@@ -146,7 +146,7 @@
     </url>
     <url>
          <loc>advance/with-submariner/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/advance/with-submariner/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/with-submariner/"/>
@@ -154,7 +154,7 @@
     </url>
     <url>
          <loc>guide/dual-stack/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/guide/dual-stack/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/guide/dual-stack/"/>
@@ -162,7 +162,7 @@
     </url>
     <url>
          <loc>guide/eip-snat/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/guide/eip-snat/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/guide/eip-snat/"/>
@@ -170,7 +170,7 @@
     </url>
     <url>
          <loc>guide/mirror/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/guide/mirror/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/guide/mirror/"/>
@@ -178,7 +178,7 @@
     </url>
     <url>
          <loc>guide/prometheus-grafana/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/guide/prometheus-grafana/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/guide/prometheus-grafana/"/>
@@ -186,7 +186,7 @@
     </url>
     <url>
          <loc>guide/qos/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/guide/qos/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/guide/qos/"/>
@@ -194,7 +194,7 @@
     </url>
     <url>
          <loc>guide/setup-options/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/guide/setup-options/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/guide/setup-options/"/>
@@ -202,7 +202,7 @@
     </url>
     <url>
          <loc>guide/static-ip-mac/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/guide/static-ip-mac/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/guide/static-ip-mac/"/>
@@ -210,7 +210,7 @@
     </url>
     <url>
          <loc>guide/subnet/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/guide/subnet/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/guide/subnet/"/>
@@ -218,7 +218,7 @@
     </url>
     <url>
          <loc>guide/vpc/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/guide/vpc/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/guide/vpc/"/>
@@ -226,7 +226,7 @@
     </url>
     <url>
          <loc>guide/webhook/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/guide/webhook/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/guide/webhook/"/>
@@ -234,7 +234,7 @@
     </url>
     <url>
          <loc>ops/change-default-subnet/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/ops/change-default-subnet/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/ops/change-default-subnet/"/>
@@ -242,7 +242,7 @@
     </url>
     <url>
          <loc>ops/change-join-subnet/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/ops/change-join-subnet/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/ops/change-join-subnet/"/>
@@ -250,7 +250,7 @@
     </url>
     <url>
          <loc>ops/change-ovn-central-node/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/ops/change-ovn-central-node/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/ops/change-ovn-central-node/"/>
@@ -258,7 +258,7 @@
     </url>
     <url>
          <loc>ops/delete-worker-node/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/ops/delete-worker-node/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/ops/delete-worker-node/"/>
@@ -266,7 +266,7 @@
     </url>
     <url>
          <loc>ops/faq/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/ops/faq/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/ops/faq/"/>
@@ -274,7 +274,7 @@
     </url>
     <url>
          <loc>ops/from-calico/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/ops/from-calico/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/ops/from-calico/"/>
@@ -282,7 +282,7 @@
     </url>
     <url>
          <loc>ops/kubectl-ko/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/ops/kubectl-ko/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/ops/kubectl-ko/"/>
@@ -290,7 +290,7 @@
     </url>
     <url>
          <loc>ops/recover-db/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/ops/recover-db/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/ops/recover-db/"/>
@@ -298,7 +298,7 @@
     </url>
     <url>
          <loc>reference/architecture/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/reference/architecture/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/reference/architecture/"/>
@@ -306,7 +306,7 @@
     </url>
     <url>
          <loc>reference/dev-env/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/reference/dev-env/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/reference/dev-env/"/>
@@ -314,7 +314,7 @@
     </url>
     <url>
          <loc>reference/metrics/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/reference/metrics/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/reference/metrics/"/>
@@ -322,7 +322,7 @@
     </url>
     <url>
          <loc>reference/ovs-ovn-customized/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/reference/ovs-ovn-customized/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/reference/ovs-ovn-customized/"/>
@@ -330,7 +330,7 @@
     </url>
     <url>
          <loc>reference/tunnel-protocol/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/reference/tunnel-protocol/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/reference/tunnel-protocol/"/>
@@ -338,7 +338,7 @@
     </url>
     <url>
          <loc>reference/underlay-topology/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/reference/underlay-topology/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/reference/underlay-topology/"/>
@@ -346,7 +346,7 @@
     </url>
     <url>
          <loc>start/one-step-install/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/start/one-step-install/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/start/one-step-install/"/>
@@ -354,7 +354,7 @@
     </url>
     <url>
          <loc>start/prepare/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/start/prepare/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/start/prepare/"/>
@@ -362,7 +362,7 @@
     </url>
     <url>
          <loc>start/underlay/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/start/underlay/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/start/underlay/"/>
@@ -370,7 +370,7 @@
     </url>
     <url>
          <loc>start/uninstall/</loc>
-         <lastmod>2022-07-16</lastmod>
+         <lastmod>2022-07-18</lastmod>
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/start/uninstall/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/start/uninstall/"/>
