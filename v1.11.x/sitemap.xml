@@ -169,6 +169,14 @@
          
     </url>
     <url>
+         <loc>guide/loadbalancer-service/</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="en/guide/loadbalancer-service/"/>
+         <xhtml:link rel="alternate" hreflang="zh" href="zh/guide/loadbalancer-service/"/>
+         
+    </url>
+    <url>
          <loc>guide/mirror/</loc>
          <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
