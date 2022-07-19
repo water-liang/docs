@@ -321,6 +321,14 @@
          
     </url>
     <url>
+         <loc>reference/document-convention/</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="en/reference/document-convention/"/>
+         <xhtml:link rel="alternate" hreflang="zh" href="zh/reference/document-convention/"/>
+         
+    </url>
+    <url>
          <loc>reference/metrics/</loc>
          <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
