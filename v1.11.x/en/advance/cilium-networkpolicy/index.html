@@ -6,7 +6,7 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hm, s);
 })();
-</script> <a href=https://github.com/kubeovn/docs/edit/master/docs/advance/cilium-networkpolicy.md title="Edit this page" class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a> <h1 id=cilium-networkpolicy>Cilium NetworkPolicy 支持<a class=headerlink href=#cilium-networkpolicy title="Permanent link">&para;</a></h1> <p>Kube-OVN 当前已经支持与 Cilium 集成，具体操作可以参考 <a href=../with-cilium/ >Cilium集成</a></p> <p>在集成 Cilium 之后，就可以使用 Cilium 优秀的网络策略能力，实现对流量访问的控制。以下文档提供了对 Cilium L3 和 L4 网络策略能力的集成验证。</p> <h2 id=_1>验证步骤<a class=headerlink href=#_1 title="Permanent link">&para;</a></h2> <h3 id=pod>创建测试 Pod<a class=headerlink href=#pod title="Permanent link">&para;</a></h3> <p>创建 namespace <code>test</code>。参考以下 yaml，在 test namespace 中创建指定 label <code>app=test</code> 的 Pod，作为测试访问的目的 Pod。</p> <pre><code class=language-yaml>apiVersion: apps/v1
+</script> <a href=https://github.com/kubeovn/docs/edit/master/docs/advance/cilium-networkpolicy.md title="Edit this page" class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a> <h1 id=cilium-networkpolicy>Cilium NetworkPolicy 支持<a class=headerlink href=#cilium-networkpolicy title="Permanent link">&para;</a></h1> <p>Kube-OVN 当前已经支持与 Cilium 集成，具体操作可以参考 <a href=../with-cilium/ >Cilium集成</a>。</p> <p>在集成 Cilium 之后，就可以使用 Cilium 优秀的网络策略能力，实现对流量访问的控制。以下文档提供了对 Cilium L3 和 L4 网络策略能力的集成验证。</p> <h2 id=_1>验证步骤<a class=headerlink href=#_1 title="Permanent link">&para;</a></h2> <h3 id=pod>创建测试 Pod<a class=headerlink href=#pod title="Permanent link">&para;</a></h3> <p>创建 namespace <code>test</code>。参考以下 yaml，在 test namespace 中创建指定 label <code>app=test</code> 的 Pod，作为测试访问的目的 Pod。</p> <pre><code class=language-yaml>apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -84,13 +84,13 @@ spec:
   - fromEndpoints:
     - matchLabels:
         app: dynamic
-</code></pre> <p>在 default namespace 下的测试 Pod 中，发起对目的 Pod 的访问，结果访问不通。 但是在 test namespace 下，测试到目录 Pod 的访问，测试正常。</p> <p>default namespace 下测试结果</p> <pre><code class=language-bash># kubectl exec -it dynamic-7d8d7874f5-9v5c4 -- bash
+</code></pre> <p>在 default namespace 下的测试 Pod 中，发起对目的 Pod 的访问，结果访问不通。 但是在 test namespace 下，测试到目的 Pod 的访问，测试正常。</p> <p>default namespace 下测试结果:</p> <pre><code class=language-bash># kubectl exec -it dynamic-7d8d7874f5-9v5c4 -- bash
 bash-5.0# ping -c 3 10.16.0.41
 PING 10.16.0.41 (10.16.0.41): 56 data bytes
 
 --- 10.16.0.41 ping statistics ---
 3 packets transmitted, 0 packets received, 100% packet loss
-</code></pre> <p>test namepsace 下 Pod 的访问，访问正常</p> <pre><code class=language-bash># kubectl exec -it -n test dynamic-7d8d7874f5-6dsg6 -- bash
+</code></pre> <p>test namepsace 下 Pod 的测试，访问正常:</p> <pre><code class=language-bash># kubectl exec -it -n test dynamic-7d8d7874f5-6dsg6 -- bash
 bash-5.0# ping -c 3 10.16.0.41
 PING 10.16.0.41 (10.16.0.41): 56 data bytes
 64 bytes from 10.16.0.41: seq=0 ttl=64 time=2.558 ms
@@ -132,7 +132,7 @@ PING 10.16.0.41 (10.16.0.41): 56 data bytes
 --- 10.16.0.41 ping statistics ---
 3 packets transmitted, 3 packets received, 0% packet loss
 round-trip min/avg/max = 0.115/0.880/2.383 ms
-</code></pre> <p>使用标准的 Kubernetes 网络策略 <a href=https://kubernetes.io/zh-cn/docs/concepts/services-networking/network-policies/ >networkpolicy</a>，测试结果显示 Cilium 同样将访问限制在同一个 Namespace 内，跨 Namespace 的访问是禁止的。</p> <p>这点与 Kube-OVN 实现是不同的。Kube-OVN 支持标准的 k8s 网络策略，限制了具体 Namespace 下的<strong>目的 Pod</strong>，但是对源地址 Pod，是没有 Namespace 限制的，任何 Namespace 下符合限制规则的 Pod，都可以实现对目的 Pod 的访问。</p> <h3 id=l4>L4 网络策略测试<a class=headerlink href=#l4 title="Permanent link">&para;</a></h3> <p>参考以下yaml，创建 L4 层的网络策略资源:</p> <pre><code class=language-yaml>apiVersion: &quot;cilium.io/v2&quot;
+</code></pre> <p>使用标准的 Kubernetes 网络策略 <a href=https://kubernetes.io/zh-cn/docs/concepts/services-networking/network-policies/ >networkpolicy</a>，测试结果显示 Cilium 同样将访问限制在同一个 Namespace 内，跨 Namespace 的访问是禁止的。</p> <p>这点与 Kube-OVN 实现是不同的。Kube-OVN 支持标准的 k8s 网络策略，限制了具体 Namespace 下的<strong>目的 Pod</strong>，但是对源地址 Pod，是没有 Namespace 限制的，任何 Namespace 下符合限制规则的 Pod，都可以实现对目的 Pod 的访问。</p> <h3 id=l4>L4 网络策略测试<a class=headerlink href=#l4 title="Permanent link">&para;</a></h3> <p>参考以下 yaml，创建 L4 层的网络策略资源:</p> <pre><code class=language-yaml>apiVersion: &quot;cilium.io/v2&quot;
 kind: CiliumNetworkPolicy
 metadata:
   name: &quot;l4-rule&quot;
