@@ -17,6 +17,22 @@
          
     </url>
     <url>
+         <loc>advance/cilium-hubble-observe/</loc>
+         <lastmod>2022-08-02</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="en/advance/cilium-hubble-observe/"/>
+         <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/cilium-hubble-observe/"/>
+         
+    </url>
+    <url>
+         <loc>advance/cilium-networkpolicy/</loc>
+         <lastmod>2022-08-02</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="en/advance/cilium-networkpolicy/"/>
+         <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/cilium-networkpolicy/"/>
+         
+    </url>
+    <url>
          <loc>advance/dhcp/</loc>
          <lastmod>2022-08-02</lastmod>
          <changefreq>daily</changefreq>
