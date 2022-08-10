@@ -1,4 +1,4 @@
-<!doctype html><html lang=zh class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="Kube-OVN Team"><link rel=icon href=../../../assets/images/favicon.png><meta name=generator content="mkdocs-1.3.1, mkdocs-material-8.2.15"><meta name=google-site-verification content=crXUpgbTSGNmzUyHUZey8X7EXueInswioZvm9VzdJHk><title>LoadBalancer 类型 Service - Kube-OVN 文档</title><link rel=stylesheet href=../../../assets/stylesheets/main.c382b1dc.min.css><link rel=stylesheet href=../../../assets/stylesheets/palette.cc9b2e1e.min.css><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback"><style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style><script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script></head> <body dir=ltr data-md-color-scheme=default data-md-color-primary=indigo data-md-color-accent=indigo> <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#loadbalancer-service class=md-skip> 跳转至 </a> </div> <div data-md-component=announce> </div> <div data-md-component=outdated hidden> <aside class="md-banner md-banner--warning"> <div class="md-banner__inner md-grid md-typeset"> You're not viewing the stable version. <a href=../../../..> <strong>Click here to go to stable.</strong> </a> </div> <script>var el=document.querySelector("[data-md-component=outdated]"),outdated=__md_get("__outdated",sessionStorage);!0===outdated&&el&&(el.hidden=!1)</script> </aside> </div> <header class="md-header md-header--lifted" data-md-component=header> <nav class="md-header__inner md-grid" aria-label=页眉> <a href=../../ title="Kube-OVN 文档" class="md-header__button md-logo" aria-label="Kube-OVN 文档" data-md-component=logo> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> Kube-OVN 文档 </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> LoadBalancer 类型 Service </span> </div> </div> </div> <form class=md-header__option data-md-component=palette> <input class=md-option data-md-color-media data-md-color-scheme=default data-md-color-primary=indigo data-md-color-accent=indigo aria-label="Switch to dark mode" type=radio name=__palette id=__palette_1> <label class="md-header__button md-icon" title="Switch to dark mode" for=__palette_2 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg> </label> <input class=md-option data-md-color-media data-md-color-scheme=slate data-md-color-primary=indigo data-md-color-accent=indigo aria-label="Switch to light mode" type=radio name=__palette id=__palette_2> <label class="md-header__button md-icon" title="Switch to light mode" for=__palette_1 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg> </label> </form> <div class=md-header__option> <div class=md-select> <button class="md-header__button md-icon" aria-label=选择当前语言> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04M18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12m-2.62 7 1.62-4.33L19.12 17h-3.24Z"/></svg> </button> <div class=md-select__inner> <ul class=md-select__list> <li class=md-select__item> <a href=../../../guide/loadbalancer-service/ hreflang=zh class=md-select__link> 简体中文 </a> </li> <li class=md-select__item> <a href=../../../en/guide/loadbalancer-service/ hreflang=en class=md-select__link> English </a> </li> </ul> </div> </div> </div> <label class="md-header__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=搜索 placeholder=搜索 autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg> </label> <nav class=md-search__options aria-label=查找> <button type=reset class="md-search__icon md-icon" aria-label=清空当前内容 tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg> </button> </nav> </form> <div class=md-search__output> <div class=md-search__scrollwrap data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> 正在初始化搜索引擎 </div> <ol class=md-search-result__list></ol> </div> </div> </div> </div> </div> <div class=md-header__source> <a href=https://github.com/kubeovn/kube-ovn/ title=前往仓库 class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> kubeovn/kube-ovn </div> </a> </div> </nav> <nav class=md-tabs aria-label=标签 data-md-component=tabs> <div class="md-tabs__inner md-grid"> <ul class=md-tabs__list> <li class=md-tabs__item> <a href=../../ class=md-tabs__link> 主页 </a> </li> <li class=md-tabs__item> <a href=../../start/prepare/ class=md-tabs__link> 快速入门 </a> </li> <li class=md-tabs__item> <a href=../setup-options/ class="md-tabs__link md-tabs__link--active"> 使用指南 </a> </li> <li class=md-tabs__item> <a href=../../ops/kubectl-ko/ class=md-tabs__link> 运维指南 </a> </li> <li class=md-tabs__item> <a href=../../advance/multi-nic/ class=md-tabs__link> 高级功能 </a> </li> <li class=md-tabs__item> <a href=../../reference/architecture/ class=md-tabs__link> 技术参考 </a> </li> <li class=md-tabs__item> <a href=../../contact/ class=md-tabs__link> 联系方式 </a> </li> </ul> </div> </nav> </header> <div class=md-container data-md-component=container> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary md-nav--lifted" aria-label=导航栏 data-md-level=0> <label class=md-nav__title for=__drawer> <a href=../../ title="Kube-OVN 文档" class="md-nav__button md-logo" aria-label="Kube-OVN 文档" data-md-component=logo> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg> </a> Kube-OVN 文档 </label> <div class=md-nav__source> <a href=https://github.com/kubeovn/kube-ovn/ title=前往仓库 class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> kubeovn/kube-ovn </div> </a> </div> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../ class=md-nav__link> 主页 </a> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_2 type=checkbox id=__nav_2> <label class=md-nav__link for=__nav_2> 快速入门 <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=快速入门 data-md-level=1> <label class=md-nav__title for=__nav_2> <span class="md-nav__icon md-icon"></span> 快速入门 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../start/prepare/ class=md-nav__link> 准备工作 </a> </li> <li class=md-nav__item> <a href=../../start/one-step-install/ class=md-nav__link> 一键安装 </a> </li> <li class=md-nav__item> <a href=../../start/underlay/ class=md-nav__link> Underlay 网络安装 </a> </li> <li class=md-nav__item> <a href=../../start/uninstall/ class=md-nav__link> 卸载 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--active md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3 type=checkbox id=__nav_3 checked> <label class=md-nav__link for=__nav_3> 使用指南 <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=使用指南 data-md-level=1> <label class=md-nav__title for=__nav_3> <span class="md-nav__icon md-icon"></span> 使用指南 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../setup-options/ class=md-nav__link> 安装和配置选项 </a> </li> <li class=md-nav__item> <a href=../static-ip-mac/ class=md-nav__link> 固定地址 </a> </li> <li class=md-nav__item> <a href=../subnet/ class=md-nav__link> 子网使用 </a> </li> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" data-md-toggle=toc type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> LoadBalancer 类型 Service <span class="md-nav__icon md-icon"></span> </label> <a href=./ class="md-nav__link md-nav__link--active"> LoadBalancer 类型 Service </a> <nav class="md-nav md-nav--secondary" aria-label=目录> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> 目录 </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#vpc-loadbalancer-service class=md-nav__link> 默认 VPC LoadBalancer Service 配置步骤 </a> <nav class=md-nav aria-label="默认 VPC LoadBalancer Service 配置步骤"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#_1 class=md-nav__link> 开启特性开关 </a> </li> <li class=md-nav__item> <a href=#networkattachmentdefinition-crd class=md-nav__link> 创建 NetworkAttachmentDefinition CRD 资源 </a> </li> <li class=md-nav__item> <a href=#subnet class=md-nav__link> 创建 Subnet </a> </li> <li class=md-nav__item> <a href=#loadbalancer-service_1 class=md-nav__link> 创建 LoadBalancer Service </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#loadbalancerip class=md-nav__link> 测试 LoadBalancerIP 访问 </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../vpc/ class=md-nav__link> VPC 使用 </a> </li> <li class=md-nav__item> <a href=../qos/ class=md-nav__link> 容器网络 QoS 配置 </a> </li> <li class=md-nav__item> <a href=../prometheus-grafana/ class=md-nav__link> 配置监控和面板 </a> </li> <li class=md-nav__item> <a href=../dual-stack/ class=md-nav__link> 双栈使用 </a> </li> <li class=md-nav__item> <a href=../eip-snat/ class=md-nav__link> EIP 和 SNAT 配置 </a> </li> <li class=md-nav__item> <a href=../mirror/ class=md-nav__link> 流量镜像 </a> </li> <li class=md-nav__item> <a href=../networkpolicy-log/ class=md-nav__link> NetworkPolicy 日志 </a> </li> <li class=md-nav__item> <a href=../webhook/ class=md-nav__link> Webhook 使用 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_4 type=checkbox id=__nav_4> <label class=md-nav__link for=__nav_4> 运维指南 <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=运维指南 data-md-level=1> <label class=md-nav__title for=__nav_4> <span class="md-nav__icon md-icon"></span> 运维指南 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../ops/kubectl-ko/ class=md-nav__link> kubectl 插件使用 </a> </li> <li class=md-nav__item> <a href=../../ops/delete-worker-node/ class=md-nav__link> 删除工作节点 </a> </li> <li class=md-nav__item> <a href=../../ops/change-ovn-central-node/ class=md-nav__link> 更换 ovn-central 节点 </a> </li> <li class=md-nav__item> <a href=../../ops/recover-db/ class=md-nav__link> OVN 数据库备份和恢复 </a> </li> <li class=md-nav__item> <a href=../../ops/change-default-subnet/ class=md-nav__link> 修改子网 CIDR </a> </li> <li class=md-nav__item> <a href=../../ops/change-join-subnet/ class=md-nav__link> 修改 Join 子网 CIDR </a> </li> <li class=md-nav__item> <a href=../../ops/from-calico/ class=md-nav__link> 卸载 Calico 安装 Kube-OVN </a> </li> <li class=md-nav__item> <a href=../../ops/faq/ class=md-nav__link> 其他常见问题 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_5 type=checkbox id=__nav_5> <label class=md-nav__link for=__nav_5> 高级功能 <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=高级功能 data-md-level=1> <label class=md-nav__title for=__nav_5> <span class="md-nav__icon md-icon"></span> 高级功能 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../advance/multi-nic/ class=md-nav__link> 多网卡管理 </a> </li> <li class=md-nav__item> <a href=../../advance/performance-tuning/ class=md-nav__link> 性能调优 </a> </li> <li class=md-nav__item> <a href=../../advance/fastpath/ class=md-nav__link> 手动编译 FastPath 模块 </a> </li> <li class=md-nav__item> <a href=../../advance/with-ovn-ic/ class=md-nav__link> 使用 OVN-IC 进行多集群互联 </a> </li> <li class=md-nav__item> <a href=../../advance/with-submariner/ class=md-nav__link> 使用 Submariner 进行多集群互联 </a> </li> <li class=md-nav__item> <a href=../../advance/overlay-with-route/ class=md-nav__link> Overlay 下路由方式网络打通 </a> </li> <li class=md-nav__item> <a href=../../advance/with-bgp/ class=md-nav__link> BGP 支持 </a> </li> <li class=md-nav__item> <a href=../../advance/with-cilium/ class=md-nav__link> Cilium 集成 </a> </li> <li class=md-nav__item> <a href=../../advance/cilium-networkpolicy/ class=md-nav__link> Cilium NetworkPolicy 支持 </a> </li> <li class=md-nav__item> <a href=../../advance/cilium-hubble-observe/ class=md-nav__link> Cilium 网络流量观测 </a> </li> <li class=md-nav__item> <a href=../../advance/dhcp/ class=md-nav__link> DHCP 设置 </a> </li> <li class=md-nav__item> <a href=../../advance/vpc-peering/ class=md-nav__link> VPC 互联 </a> </li> <li class=md-nav__item> <a href=../../advance/external-gateway/ class=md-nav__link> 外部网关设置 </a> </li> <li class=md-nav__item> <a href=../../advance/vip/ class=md-nav__link> VIP 预留设置 </a> </li> <li class=md-nav__item> <a href=../../advance/offload-mellanox/ class=md-nav__link> Mellanox 网卡 Offload 支持 </a> </li> <li class=md-nav__item> <a href=../../advance/offload-corigine/ class=md-nav__link> 芯启源网卡 Offload 支持 </a> </li> <li class=md-nav__item> <a href=../../advance/windows/ class=md-nav__link> Windows 支持 </a> </li> <li class=md-nav__item> <a href=../../advance/dpdk/ class=md-nav__link> DPDK 支持 </a> </li> <li class=md-nav__item> <a href=../../advance/with-openstack/ class=md-nav__link> OpenStack 集成 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6 type=checkbox id=__nav_6> <label class=md-nav__link for=__nav_6> 技术参考 <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=技术参考 data-md-level=1> <label class=md-nav__title for=__nav_6> <span class="md-nav__icon md-icon"></span> 技术参考 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../reference/architecture/ class=md-nav__link> 总体架构 </a> </li> <li class=md-nav__item> <a href=../../reference/underlay-topology/ class=md-nav__link> Underlay 流量拓扑 </a> </li> <li class=md-nav__item> <a href=../../reference/dev-env/ class=md-nav__link> 开发环境构建 </a> </li> <li class=md-nav__item> <a href=../../reference/ovs-ovn-customized/ class=md-nav__link> 对上游 OVS/OVN 修改 </a> </li> <li class=md-nav__item> <a href=../../reference/tunnel-protocol/ class=md-nav__link> 隧道协议说明 </a> </li> <li class=md-nav__item> <a href=../../reference/metrics/ class=md-nav__link> Kube-OVN 监控指标 </a> </li> <li class=md-nav__item> <a href=../../reference/document-convention/ class=md-nav__link> 文档规范 </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../../contact/ class=md-nav__link> 联系方式 </a> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=sidebar data-md-type=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary" aria-label=目录> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> 目录 </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#vpc-loadbalancer-service class=md-nav__link> 默认 VPC LoadBalancer Service 配置步骤 </a> <nav class=md-nav aria-label="默认 VPC LoadBalancer Service 配置步骤"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#_1 class=md-nav__link> 开启特性开关 </a> </li> <li class=md-nav__item> <a href=#networkattachmentdefinition-crd class=md-nav__link> 创建 NetworkAttachmentDefinition CRD 资源 </a> </li> <li class=md-nav__item> <a href=#subnet class=md-nav__link> 创建 Subnet </a> </li> <li class=md-nav__item> <a href=#loadbalancer-service_1 class=md-nav__link> 创建 LoadBalancer Service </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#loadbalancerip class=md-nav__link> 测试 LoadBalancerIP 访问 </a> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <article class="md-content__inner md-typeset"> <script>
+<!doctype html><html lang=zh class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="Kube-OVN Team"><link rel=icon href=../../../assets/images/favicon.png><meta name=generator content="mkdocs-1.3.1, mkdocs-material-8.2.15"><meta name=google-site-verification content=crXUpgbTSGNmzUyHUZey8X7EXueInswioZvm9VzdJHk><title>LoadBalancer 类型 Service - Kube-OVN 文档</title><link rel=stylesheet href=../../../assets/stylesheets/main.c382b1dc.min.css><link rel=stylesheet href=../../../assets/stylesheets/palette.cc9b2e1e.min.css><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback"><style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style><script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script></head> <body dir=ltr data-md-color-scheme=default data-md-color-primary=indigo data-md-color-accent=indigo> <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#loadbalancer-service class=md-skip> 跳转至 </a> </div> <div data-md-component=announce> </div> <div data-md-component=outdated hidden> <aside class="md-banner md-banner--warning"> <div class="md-banner__inner md-grid md-typeset"> You're not viewing the stable version. <a href=../../../..> <strong>Click here to go to stable.</strong> </a> </div> <script>var el=document.querySelector("[data-md-component=outdated]"),outdated=__md_get("__outdated",sessionStorage);!0===outdated&&el&&(el.hidden=!1)</script> </aside> </div> <header class="md-header md-header--lifted" data-md-component=header> <nav class="md-header__inner md-grid" aria-label=页眉> <a href=../../ title="Kube-OVN 文档" class="md-header__button md-logo" aria-label="Kube-OVN 文档" data-md-component=logo> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> Kube-OVN 文档 </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> LoadBalancer 类型 Service </span> </div> </div> </div> <form class=md-header__option data-md-component=palette> <input class=md-option data-md-color-media data-md-color-scheme=default data-md-color-primary=indigo data-md-color-accent=indigo aria-label="Switch to dark mode" type=radio name=__palette id=__palette_1> <label class="md-header__button md-icon" title="Switch to dark mode" for=__palette_2 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg> </label> <input class=md-option data-md-color-media data-md-color-scheme=slate data-md-color-primary=indigo data-md-color-accent=indigo aria-label="Switch to light mode" type=radio name=__palette id=__palette_2> <label class="md-header__button md-icon" title="Switch to light mode" for=__palette_1 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg> </label> </form> <div class=md-header__option> <div class=md-select> <button class="md-header__button md-icon" aria-label=选择当前语言> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04M18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12m-2.62 7 1.62-4.33L19.12 17h-3.24Z"/></svg> </button> <div class=md-select__inner> <ul class=md-select__list> <li class=md-select__item> <a href=../../../guide/loadbalancer-service/ hreflang=zh class=md-select__link> 简体中文 </a> </li> <li class=md-select__item> <a href=../../../en/guide/loadbalancer-service/ hreflang=en class=md-select__link> English </a> </li> </ul> </div> </div> </div> <label class="md-header__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=搜索 placeholder=搜索 autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg> </label> <nav class=md-search__options aria-label=查找> <button type=reset class="md-search__icon md-icon" aria-label=清空当前内容 tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg> </button> </nav> </form> <div class=md-search__output> <div class=md-search__scrollwrap data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> 正在初始化搜索引擎 </div> <ol class=md-search-result__list></ol> </div> </div> </div> </div> </div> <div class=md-header__source> <a href=https://github.com/kubeovn/kube-ovn/ title=前往仓库 class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> kubeovn/kube-ovn </div> </a> </div> </nav> <nav class=md-tabs aria-label=标签 data-md-component=tabs> <div class="md-tabs__inner md-grid"> <ul class=md-tabs__list> <li class=md-tabs__item> <a href=../../ class=md-tabs__link> 主页 </a> </li> <li class=md-tabs__item> <a href=../../start/prepare/ class=md-tabs__link> 快速入门 </a> </li> <li class=md-tabs__item> <a href=../setup-options/ class="md-tabs__link md-tabs__link--active"> 使用指南 </a> </li> <li class=md-tabs__item> <a href=../../ops/kubectl-ko/ class=md-tabs__link> 运维指南 </a> </li> <li class=md-tabs__item> <a href=../../advance/multi-nic/ class=md-tabs__link> 高级功能 </a> </li> <li class=md-tabs__item> <a href=../../reference/architecture/ class=md-tabs__link> 技术参考 </a> </li> <li class=md-tabs__item> <a href=../../contact/ class=md-tabs__link> 联系方式 </a> </li> </ul> </div> </nav> </header> <div class=md-container data-md-component=container> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary md-nav--lifted" aria-label=导航栏 data-md-level=0> <label class=md-nav__title for=__drawer> <a href=../../ title="Kube-OVN 文档" class="md-nav__button md-logo" aria-label="Kube-OVN 文档" data-md-component=logo> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg> </a> Kube-OVN 文档 </label> <div class=md-nav__source> <a href=https://github.com/kubeovn/kube-ovn/ title=前往仓库 class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> kubeovn/kube-ovn </div> </a> </div> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../ class=md-nav__link> 主页 </a> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_2 type=checkbox id=__nav_2> <label class=md-nav__link for=__nav_2> 快速入门 <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=快速入门 data-md-level=1> <label class=md-nav__title for=__nav_2> <span class="md-nav__icon md-icon"></span> 快速入门 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../start/prepare/ class=md-nav__link> 准备工作 </a> </li> <li class=md-nav__item> <a href=../../start/one-step-install/ class=md-nav__link> 一键安装 </a> </li> <li class=md-nav__item> <a href=../../start/underlay/ class=md-nav__link> Underlay 网络安装 </a> </li> <li class=md-nav__item> <a href=../../start/sealos-install/ class=md-nav__link> 使用 sealos 一键部署 Kubernetes 和 Kube-OVN </a> </li> <li class=md-nav__item> <a href=../../start/uninstall/ class=md-nav__link> 卸载 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--active md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3 type=checkbox id=__nav_3 checked> <label class=md-nav__link for=__nav_3> 使用指南 <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=使用指南 data-md-level=1> <label class=md-nav__title for=__nav_3> <span class="md-nav__icon md-icon"></span> 使用指南 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../setup-options/ class=md-nav__link> 安装和配置选项 </a> </li> <li class=md-nav__item> <a href=../static-ip-mac/ class=md-nav__link> 固定地址 </a> </li> <li class=md-nav__item> <a href=../subnet/ class=md-nav__link> 子网使用 </a> </li> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" data-md-toggle=toc type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> LoadBalancer 类型 Service <span class="md-nav__icon md-icon"></span> </label> <a href=./ class="md-nav__link md-nav__link--active"> LoadBalancer 类型 Service </a> <nav class="md-nav md-nav--secondary" aria-label=目录> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> 目录 </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#vpc-loadbalancer-service class=md-nav__link> 默认 VPC LoadBalancer Service 配置步骤 </a> <nav class=md-nav aria-label="默认 VPC LoadBalancer Service 配置步骤"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#_1 class=md-nav__link> 开启特性开关 </a> </li> <li class=md-nav__item> <a href=#networkattachmentdefinition-crd class=md-nav__link> 创建 NetworkAttachmentDefinition CRD 资源 </a> </li> <li class=md-nav__item> <a href=#subnet class=md-nav__link> 创建 Subnet </a> </li> <li class=md-nav__item> <a href=#loadbalancer-service_1 class=md-nav__link> 创建 LoadBalancer Service </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#loadbalancerip class=md-nav__link> 测试 LoadBalancerIP 访问 </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../vpc/ class=md-nav__link> VPC 使用 </a> </li> <li class=md-nav__item> <a href=../qos/ class=md-nav__link> 容器网络 QoS 配置 </a> </li> <li class=md-nav__item> <a href=../prometheus-grafana/ class=md-nav__link> 配置监控和面板 </a> </li> <li class=md-nav__item> <a href=../dual-stack/ class=md-nav__link> 双栈使用 </a> </li> <li class=md-nav__item> <a href=../eip-snat/ class=md-nav__link> EIP 和 SNAT 配置 </a> </li> <li class=md-nav__item> <a href=../mirror/ class=md-nav__link> 流量镜像 </a> </li> <li class=md-nav__item> <a href=../networkpolicy-log/ class=md-nav__link> NetworkPolicy 日志 </a> </li> <li class=md-nav__item> <a href=../webhook/ class=md-nav__link> Webhook 使用 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_4 type=checkbox id=__nav_4> <label class=md-nav__link for=__nav_4> 运维指南 <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=运维指南 data-md-level=1> <label class=md-nav__title for=__nav_4> <span class="md-nav__icon md-icon"></span> 运维指南 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../ops/kubectl-ko/ class=md-nav__link> kubectl 插件使用 </a> </li> <li class=md-nav__item> <a href=../../ops/delete-worker-node/ class=md-nav__link> 删除工作节点 </a> </li> <li class=md-nav__item> <a href=../../ops/change-ovn-central-node/ class=md-nav__link> 更换 ovn-central 节点 </a> </li> <li class=md-nav__item> <a href=../../ops/recover-db/ class=md-nav__link> OVN 数据库备份和恢复 </a> </li> <li class=md-nav__item> <a href=../../ops/change-default-subnet/ class=md-nav__link> 修改子网 CIDR </a> </li> <li class=md-nav__item> <a href=../../ops/change-join-subnet/ class=md-nav__link> 修改 Join 子网 CIDR </a> </li> <li class=md-nav__item> <a href=../../ops/from-calico/ class=md-nav__link> 卸载 Calico 安装 Kube-OVN </a> </li> <li class=md-nav__item> <a href=../../ops/faq/ class=md-nav__link> 其他常见问题 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_5 type=checkbox id=__nav_5> <label class=md-nav__link for=__nav_5> 高级功能 <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=高级功能 data-md-level=1> <label class=md-nav__title for=__nav_5> <span class="md-nav__icon md-icon"></span> 高级功能 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../advance/multi-nic/ class=md-nav__link> 多网卡管理 </a> </li> <li class=md-nav__item> <a href=../../advance/performance-tuning/ class=md-nav__link> 性能调优 </a> </li> <li class=md-nav__item> <a href=../../advance/fastpath/ class=md-nav__link> 手动编译 FastPath 模块 </a> </li> <li class=md-nav__item> <a href=../../advance/with-ovn-ic/ class=md-nav__link> 使用 OVN-IC 进行多集群互联 </a> </li> <li class=md-nav__item> <a href=../../advance/with-submariner/ class=md-nav__link> 使用 Submariner 进行多集群互联 </a> </li> <li class=md-nav__item> <a href=../../advance/overlay-with-route/ class=md-nav__link> Overlay 下路由方式网络打通 </a> </li> <li class=md-nav__item> <a href=../../advance/with-bgp/ class=md-nav__link> BGP 支持 </a> </li> <li class=md-nav__item> <a href=../../advance/with-cilium/ class=md-nav__link> Cilium 集成 </a> </li> <li class=md-nav__item> <a href=../../advance/cilium-networkpolicy/ class=md-nav__link> Cilium NetworkPolicy 支持 </a> </li> <li class=md-nav__item> <a href=../../advance/cilium-hubble-observe/ class=md-nav__link> Cilium 网络流量观测 </a> </li> <li class=md-nav__item> <a href=../../advance/dhcp/ class=md-nav__link> DHCP 设置 </a> </li> <li class=md-nav__item> <a href=../../advance/vpc-peering/ class=md-nav__link> VPC 互联 </a> </li> <li class=md-nav__item> <a href=../../advance/external-gateway/ class=md-nav__link> 外部网关设置 </a> </li> <li class=md-nav__item> <a href=../../advance/vip/ class=md-nav__link> VIP 预留设置 </a> </li> <li class=md-nav__item> <a href=../../advance/offload-mellanox/ class=md-nav__link> Mellanox 网卡 Offload 支持 </a> </li> <li class=md-nav__item> <a href=../../advance/offload-corigine/ class=md-nav__link> 芯启源网卡 Offload 支持 </a> </li> <li class=md-nav__item> <a href=../../advance/windows/ class=md-nav__link> Windows 支持 </a> </li> <li class=md-nav__item> <a href=../../advance/dpdk/ class=md-nav__link> DPDK 支持 </a> </li> <li class=md-nav__item> <a href=../../advance/with-openstack/ class=md-nav__link> OpenStack 集成 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6 type=checkbox id=__nav_6> <label class=md-nav__link for=__nav_6> 技术参考 <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=技术参考 data-md-level=1> <label class=md-nav__title for=__nav_6> <span class="md-nav__icon md-icon"></span> 技术参考 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../reference/architecture/ class=md-nav__link> 总体架构 </a> </li> <li class=md-nav__item> <a href=../../reference/underlay-topology/ class=md-nav__link> Underlay 流量拓扑 </a> </li> <li class=md-nav__item> <a href=../../reference/dev-env/ class=md-nav__link> 开发环境构建 </a> </li> <li class=md-nav__item> <a href=../../reference/ovs-ovn-customized/ class=md-nav__link> 对上游 OVS/OVN 修改 </a> </li> <li class=md-nav__item> <a href=../../reference/tunnel-protocol/ class=md-nav__link> 隧道协议说明 </a> </li> <li class=md-nav__item> <a href=../../reference/metrics/ class=md-nav__link> Kube-OVN 监控指标 </a> </li> <li class=md-nav__item> <a href=../../reference/document-convention/ class=md-nav__link> 文档规范 </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../../contact/ class=md-nav__link> 联系方式 </a> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=sidebar data-md-type=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary" aria-label=目录> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> 目录 </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#vpc-loadbalancer-service class=md-nav__link> 默认 VPC LoadBalancer Service 配置步骤 </a> <nav class=md-nav aria-label="默认 VPC LoadBalancer Service 配置步骤"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#_1 class=md-nav__link> 开启特性开关 </a> </li> <li class=md-nav__item> <a href=#networkattachmentdefinition-crd class=md-nav__link> 创建 NetworkAttachmentDefinition CRD 资源 </a> </li> <li class=md-nav__item> <a href=#subnet class=md-nav__link> 创建 Subnet </a> </li> <li class=md-nav__item> <a href=#loadbalancer-service_1 class=md-nav__link> 创建 LoadBalancer Service </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#loadbalancerip class=md-nav__link> 测试 LoadBalancerIP 访问 </a> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <article class="md-content__inner md-typeset"> <script>
 var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
@@ -6,145 +6,145 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hm, s);
 })();
-</script> <a href=https://github.com/kubeovn/docs/edit/master/docs/guide/loadbalancer-service.md title=编辑此页 class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a> <h1 id=loadbalancer-service>LoadBalancer 类型 Service<a class=headerlink href=#loadbalancer-service title="Permanent link">&para;</a></h1> <p>Kube-OVN 已经支持了 VPC 和 VPC 网关的实现，具体配置可以参考 <a href=../vpc/ >VPC 配置</a>。</p> <p>由于 VPC 网关的使用比较复杂，基于 VPC 网关的实现做了简化，支持在默认 VPC 下创建 <code>LoadBalancer</code> 类型的 Service，实现通过 LoadBalancerIP 来访问默认 VPC 下的 Service。</p> <p>首先确认环境上满足以下条件： 1. 安装了 <code>multus-cni</code> 和 <code>macvlan cni</code>。 2. LoadBalancer Service 的支持，是对 VPC 网关代码进行简化实现的，仍然使用 <code>vpc-nat-gw</code> 的镜像，依赖 macvlan 提供多网卡功能支持。 3. 目前只支持在<code>默认 VPC</code> 配置，自定义 VPC 下的 LoadBalancer 支持可以参考 VPC 的文档 <a href=../vpc/ >VPC 配置</a>。</p> <h2 id=vpc-loadbalancer-service>默认 VPC LoadBalancer Service 配置步骤<a class=headerlink href=#vpc-loadbalancer-service title="Permanent link">&para;</a></h2> <h3 id=_1>开启特性开关<a class=headerlink href=#_1 title="Permanent link">&para;</a></h3> <p>修改 kube-system namespace 下的 deployment <code>kube-ovn-controller</code>，在 <code>args</code> 中增加参数 <code>--enable-lb-svc=true</code>，开启功能开关，该参数默认为 false。</p> <pre><code class=language-yaml>containers:
-- args:
-  - /kube-ovn/start-controller.sh
-  - --default-cidr=10.16.0.0/16
-  - --default-gateway=10.16.0.1
-  - --default-gateway-check=true
-  - --enable-lb-svc=true                  // 参数设置为 true
-</code></pre> <h3 id=networkattachmentdefinition-crd>创建 NetworkAttachmentDefinition CRD 资源<a class=headerlink href=#networkattachmentdefinition-crd title="Permanent link">&para;</a></h3> <p>参考以下 yaml，创建 <code>net-attach-def</code> 资源:</p> <pre><code class=language-yaml>apiVersion: &quot;k8s.cni.cncf.io/v1&quot;
-kind: NetworkAttachmentDefinition
-metadata:
-  name: lb-svc-attachment
-  namespace: kube-system
-spec:
-  config: '{
-      &quot;cniVersion&quot;: &quot;0.3.0&quot;,
-      &quot;type&quot;: &quot;macvlan&quot;,
-      &quot;master&quot;: &quot;eth0&quot;,                         //物理网卡，根据实际情况配置
-      &quot;mode&quot;: &quot;bridge&quot;
-    }'
-</code></pre> <p>默认情况下，通过物理网卡 <code>eth0</code> 来实现多网卡功能，如果需要使用其他物理网卡，可以通过修改 <code>master</code> 取值，指定使用的物理网卡名称。</p> <h3 id=subnet>创建 Subnet<a class=headerlink href=#subnet title="Permanent link">&para;</a></h3> <p>创建的 Subnet，用于给 LoadBalancer Service 分配 LoadBalancerIP，该地址正常情况下在集群外应该可以访问到。可以配置 Underlay Subnet 用于地址分配。</p> <p>参考以下 yaml，创建新子网：</p> <pre><code class=language-yaml>apiVersion: kubeovn.io/v1
-kind: Subnet
-metadata:
-  name: attach-subnet
-spec:
-  protocol: IPv4
-  provider: lb-svc-attachment.kube-system    # provider 格式固定，由上一步创建的 net-attach-def 资源的 Name.Namespace 组成
-  cidrBlock: 172.18.0.0/16
-  gateway: 172.18.0.1
-  excludeIps:
-  - 172.18.0.0..172.18.0.10
-</code></pre> <p>Subnet 中 <code>provider</code> 参数以 <code>ovn</code> 或者以 <code>.ovn</code> 为后缀结束，表示该子网是由 Kube-OVN 管理使用，需要对应创建 <code>logical switch</code> 记录。</p> <p><code>provider</code> 非 <code>ovn</code> 或者非 <code>.ovn</code> 为后缀结束，则 Kube-OVN 只提供 IPAM 功能，记录 IP 地址分配情况，不对子网做业务逻辑处理。</p> <h3 id=loadbalancer-service_1>创建 LoadBalancer Service<a class=headerlink href=#loadbalancer-service_1 title="Permanent link">&para;</a></h3> <p>参考以下 yaml，创建 LoadBalancer Service：</p> <pre><code class=language-yaml>apiVersion: v1
-kind: Service
-metadata:
-  annotations:
-    lb-svc-attachment.kube-system.kubernetes.io/logical_switch: attach-subnet   #可选
-    ovn.kubernetes.io/attchmentprovider: lb-svc-attachment.kube-system          #必须
-  labels:
-    app: dynamic
-  name: test-service
-  namespace: default
-spec:
-  loadBalancerIP: 172.18.0.18                                                   #可选
-  ports:
-    - name: test
-      protocol: TCP
-      port: 80
-      targetPort: 80
-  selector:
-    app: dynamic
-  sessionAffinity: None
-  type: LoadBalancer
-</code></pre> <p>在 yaml 中，annotation <code>ovn.kubernetes.io/attchmentprovider</code> 为必填项，取值由第一步创建的 <code>net-attach-def</code> 资源的 Name.Namespace 组成。该 annotation 用于在创建 Pod 时，查找 <code>net-attach-def</code> 资源。</p> <p>可以通过 annotation 指定多网卡地址分配使用的子网。annotation key 格式为 net-attach-def 资源的 <code>Name.Namespace.kubernetes.io/logical_switch</code>。该配置为<code>可选</code>选项，在没有指定 LoadBalancerIP 地址的情况下，将从该子网动态分配地址，填充到 LoadBalancerIP 字段。</p> <p>如果需要静态配置 LoadBalancerIP 地址，可以配置 <code>spec.loadBalancerIP</code> 字段，该地址需要在指定子网的地址范围内。</p> <p>在执行 yaml 创建 Service 后，在 Service 同 Namespace 下，可以看到 Pod 启动信息：</p> <pre><code class=language-bash># kubectl get pod
+</script> <a href=https://github.com/kubeovn/docs/edit/master/docs/guide/loadbalancer-service.md title=编辑此页 class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a> <h1 id=loadbalancer-service>LoadBalancer 类型 Service<a class=headerlink href=#loadbalancer-service title="Permanent link">&para;</a></h1> <p>Kube-OVN 已经支持了 VPC 和 VPC 网关的实现，具体配置可以参考 <a href=../vpc/ >VPC 配置</a>。</p> <p>由于 VPC 网关的使用比较复杂，基于 VPC 网关的实现做了简化，支持在默认 VPC 下创建 <code>LoadBalancer</code> 类型的 Service，实现通过 LoadBalancerIP 来访问默认 VPC 下的 Service。</p> <p>首先确认环境上满足以下条件： 1. 安装了 <code>multus-cni</code> 和 <code>macvlan cni</code>。 2. LoadBalancer Service 的支持，是对 VPC 网关代码进行简化实现的，仍然使用 <code>vpc-nat-gw</code> 的镜像，依赖 macvlan 提供多网卡功能支持。 3. 目前只支持在<code>默认 VPC</code> 配置，自定义 VPC 下的 LoadBalancer 支持可以参考 VPC 的文档 <a href=../vpc/ >VPC 配置</a>。</p> <h2 id=vpc-loadbalancer-service>默认 VPC LoadBalancer Service 配置步骤<a class=headerlink href=#vpc-loadbalancer-service title="Permanent link">&para;</a></h2> <h3 id=_1>开启特性开关<a class=headerlink href=#_1 title="Permanent link">&para;</a></h3> <p>修改 kube-system namespace 下的 deployment <code>kube-ovn-controller</code>，在 <code>args</code> 中增加参数 <code>--enable-lb-svc=true</code>，开启功能开关，该参数默认为 false。 <div class=highlight><pre><span></span><code><span class=nt>containers</span><span class=p>:</span><span class=w></span>
+<span class="p p-Indicator">-</span><span class=w> </span><span class=nt>args</span><span class=p>:</span><span class=w></span>
+<span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">/kube-ovn/start-controller.sh</span><span class=w></span>
+<span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">--default-cidr=10.16.0.0/16</span><span class=w></span>
+<span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">--default-gateway=10.16.0.1</span><span class=w></span>
+<span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">--default-gateway-check=true</span><span class=w></span>
+<span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">--enable-lb-svc=true                  // 参数设置为 true</span><span class=w></span>
+</code></pre></div></p> <h3 id=networkattachmentdefinition-crd>创建 NetworkAttachmentDefinition CRD 资源<a class=headerlink href=#networkattachmentdefinition-crd title="Permanent link">&para;</a></h3> <p>参考以下 yaml，创建 <code>net-attach-def</code> 资源:</p> <p><div class=highlight><pre><span></span><code><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=s>&quot;k8s.cni.cncf.io/v1&quot;</span><span class=w></span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">NetworkAttachmentDefinition</span><span class=w></span>
+<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">lb-svc-attachment</span><span class=w></span>
+<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span><span class=w></span>
+<span class=nt>spec</span><span class=p>:</span><span class=w></span>
+<span class=w>  </span><span class=nt>config</span><span class=p>:</span><span class=w> </span><span class=s>&#39;{</span><span class=w></span>
+<span class=w>      </span><span class=s>&quot;cniVersion&quot;:</span><span class=nv> </span><span class=s>&quot;0.3.0&quot;,</span><span class=w></span>
+<span class=w>      </span><span class=s>&quot;type&quot;:</span><span class=nv> </span><span class=s>&quot;macvlan&quot;,</span><span class=w></span>
+<span class=w>      </span><span class=s>&quot;master&quot;:</span><span class=nv> </span><span class=s>&quot;eth0&quot;,</span><span class=nv>                         </span><span class=s>//物理网卡，根据实际情况配置</span><span class=w></span>
+<span class=w>      </span><span class=s>&quot;mode&quot;:</span><span class=nv> </span><span class=s>&quot;bridge&quot;</span><span class=w></span>
+<span class=w>    </span><span class=s>}&#39;</span><span class=w></span>
+</code></pre></div> 默认情况下，通过物理网卡 <code>eth0</code> 来实现多网卡功能，如果需要使用其他物理网卡，可以通过修改 <code>master</code> 取值，指定使用的物理网卡名称。</p> <h3 id=subnet>创建 Subnet<a class=headerlink href=#subnet title="Permanent link">&para;</a></h3> <p>创建的 Subnet，用于给 LoadBalancer Service 分配 LoadBalancerIP，该地址正常情况下在集群外应该可以访问到。可以配置 Underlay Subnet 用于地址分配。</p> <p>参考以下 yaml，创建新子网：</p> <div class=highlight><pre><span></span><code><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Subnet</span><span class=w></span>
+<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">attach-subnet</span><span class=w></span>
+<span class=nt>spec</span><span class=p>:</span><span class=w></span>
+<span class=w>  </span><span class=nt>protocol</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IPv4</span><span class=w></span>
+<span class=w>  </span><span class=nt>provider</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">lb-svc-attachment.kube-system</span><span class=w>    </span><span class=c1># provider 格式固定，由上一步创建的 net-attach-def 资源的 Name.Namespace 组成</span><span class=w></span>
+<span class=w>  </span><span class=nt>cidrBlock</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">172.18.0.0/16</span><span class=w></span>
+<span class=w>  </span><span class=nt>gateway</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">172.18.0.1</span><span class=w></span>
+<span class=w>  </span><span class=nt>excludeIps</span><span class=p>:</span><span class=w></span>
+<span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">172.18.0.0..172.18.0.10</span><span class=w></span>
+</code></pre></div> <p>Subnet 中 <code>provider</code> 参数以 <code>ovn</code> 或者以 <code>.ovn</code> 为后缀结束，表示该子网是由 Kube-OVN 管理使用，需要对应创建 <code>logical switch</code> 记录。</p> <p><code>provider</code> 非 <code>ovn</code> 或者非 <code>.ovn</code> 为后缀结束，则 Kube-OVN 只提供 IPAM 功能，记录 IP 地址分配情况，不对子网做业务逻辑处理。</p> <h3 id=loadbalancer-service_1>创建 LoadBalancer Service<a class=headerlink href=#loadbalancer-service_1 title="Permanent link">&para;</a></h3> <p>参考以下 yaml，创建 LoadBalancer Service：</p> <p><div class=highlight><pre><span></span><code><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class=w></span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Service</span><span class=w></span>
+<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
+<span class=w>  </span><span class=nt>annotations</span><span class=p>:</span><span class=w></span>
+<span class=w>    </span><span class=nt>lb-svc-attachment.kube-system.kubernetes.io/logical_switch</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">attach-subnet</span><span class=w>   </span><span class=c1>#可选</span><span class=w></span>
+<span class=w>    </span><span class=nt>ovn.kubernetes.io/attchmentprovider</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">lb-svc-attachment.kube-system</span><span class=w>          </span><span class=c1>#必须</span><span class=w></span>
+<span class=w>  </span><span class=nt>labels</span><span class=p>:</span><span class=w></span>
+<span class=w>    </span><span class=nt>app</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">dynamic</span><span class=w></span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">test-service</span><span class=w></span>
+<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">default</span><span class=w></span>
+<span class=nt>spec</span><span class=p>:</span><span class=w></span>
+<span class=w>  </span><span class=nt>loadBalancerIP</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">172.18.0.18</span><span class=w>                                                   </span><span class=c1>#可选</span><span class=w></span>
+<span class=w>  </span><span class=nt>ports</span><span class=p>:</span><span class=w></span>
+<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">test</span><span class=w></span>
+<span class=w>      </span><span class=nt>protocol</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span><span class=w></span>
+<span class=w>      </span><span class=nt>port</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">80</span><span class=w></span>
+<span class=w>      </span><span class=nt>targetPort</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">80</span><span class=w></span>
+<span class=w>  </span><span class=nt>selector</span><span class=p>:</span><span class=w></span>
+<span class=w>    </span><span class=nt>app</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">dynamic</span><span class=w></span>
+<span class=w>  </span><span class=nt>sessionAffinity</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">None</span><span class=w></span>
+<span class=w>  </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">LoadBalancer</span><span class=w></span>
+</code></pre></div> 在 yaml 中，annotation <code>ovn.kubernetes.io/attchmentprovider</code> 为必填项，取值由第一步创建的 <code>net-attach-def</code> 资源的 Name.Namespace 组成。该 annotation 用于在创建 Pod 时，查找 <code>net-attach-def</code> 资源。</p> <p>可以通过 annotation 指定多网卡地址分配使用的子网。annotation key 格式为 net-attach-def 资源的 <code>Name.Namespace.kubernetes.io/logical_switch</code>。该配置为<code>可选</code>选项，在没有指定 LoadBalancerIP 地址的情况下，将从该子网动态分配地址，填充到 LoadBalancerIP 字段。</p> <p>如果需要静态配置 LoadBalancerIP 地址，可以配置 <code>spec.loadBalancerIP</code> 字段，该地址需要在指定子网的地址范围内。</p> <p>在执行 yaml 创建 Service 后，在 Service 同 Namespace 下，可以看到 Pod 启动信息：</p> <p><div class=highlight><pre><span></span><code><span class=c1># kubectl get pod</span>
 NAME                                      READY   STATUS    RESTARTS   AGE
-lb-svc-test-service-6869d98dd8-cjvll      1/1     Running   0          107m
-# kubectl get svc
-NAME              TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
-test-service      LoadBalancer   10.109.201.193   172.18.0.18   80:30056/TCP   107m
-</code></pre> <p>指定 <code>service.spec.loadBalancerIP</code> 参数时，最终将该参数赋值给 service external-ip 字段。不指定的情况下，该参数为随机分配值。</p> <p>查看测试 Pod 的 yaml 输出，存在多网卡分配的地址信息：</p> <pre><code class=language-bash># kubectl get pod -o yaml lb-svc-test-service-6869d98dd8-cjvll
+lb-svc-test-service-6869d98dd8-cjvll      <span class=m>1</span>/1     Running   <span class=m>0</span>          107m
+<span class=c1># kubectl get svc</span>
+NAME              TYPE           CLUSTER-IP       EXTERNAL-IP   PORT<span class=o>(</span>S<span class=o>)</span>        AGE
+test-service      LoadBalancer   <span class=m>10</span>.109.201.193   <span class=m>172</span>.18.0.18   <span class=m>80</span>:30056/TCP   107m
+</code></pre></div> 指定 <code>service.spec.loadBalancerIP</code> 参数时，最终将该参数赋值给 service external-ip 字段。不指定的情况下，该参数为随机分配值。</p> <p>查看测试 Pod 的 yaml 输出，存在多网卡分配的地址信息：</p> <div class=highlight><pre><span></span><code><span class=c1># kubectl get pod -o yaml lb-svc-test-service-6869d98dd8-cjvll</span>
 apiVersion: v1
 kind: Pod
 metadata:
   annotations:
-    k8s.v1.cni.cncf.io/network-status: |-
-      [{
-          &quot;name&quot;: &quot;kube-ovn&quot;,
-          &quot;ips&quot;: [
-              &quot;10.16.0.2&quot;
-          ],
-          &quot;default&quot;: true,
-          &quot;dns&quot;: {}
-      },{
-          &quot;name&quot;: &quot;default/test-service&quot;,
-          &quot;interface&quot;: &quot;net1&quot;,
-          &quot;mac&quot;: &quot;ba:85:f7:02:9f:42&quot;,
-          &quot;dns&quot;: {}
-      }]
+    k8s.v1.cni.cncf.io/network-status: <span class=p>|</span>-
+      <span class=o>[{</span>
+          <span class=s2>&quot;name&quot;</span>: <span class=s2>&quot;kube-ovn&quot;</span>,
+          <span class=s2>&quot;ips&quot;</span>: <span class=o>[</span>
+              <span class=s2>&quot;10.16.0.2&quot;</span>
+          <span class=o>]</span>,
+          <span class=s2>&quot;default&quot;</span>: true,
+          <span class=s2>&quot;dns&quot;</span>: <span class=o>{}</span>
+      <span class=o>}</span>,<span class=o>{</span>
+          <span class=s2>&quot;name&quot;</span>: <span class=s2>&quot;default/test-service&quot;</span>,
+          <span class=s2>&quot;interface&quot;</span>: <span class=s2>&quot;net1&quot;</span>,
+          <span class=s2>&quot;mac&quot;</span>: <span class=s2>&quot;ba:85:f7:02:9f:42&quot;</span>,
+          <span class=s2>&quot;dns&quot;</span>: <span class=o>{}</span>
+      <span class=o>}]</span>
     k8s.v1.cni.cncf.io/networks: default/test-service
-    k8s.v1.cni.cncf.io/networks-status: |-
-      [{
-          &quot;name&quot;: &quot;kube-ovn&quot;,
-          &quot;ips&quot;: [
-              &quot;10.16.0.2&quot;
-          ],
-          &quot;default&quot;: true,
-          &quot;dns&quot;: {}
-      },{
-          &quot;name&quot;: &quot;default/test-service&quot;,
-          &quot;interface&quot;: &quot;net1&quot;,
-          &quot;mac&quot;: &quot;ba:85:f7:02:9f:42&quot;,
-          &quot;dns&quot;: {}
-      }]
-    ovn.kubernetes.io/allocated: &quot;true&quot;
-    ovn.kubernetes.io/cidr: 10.16.0.0/16
-    ovn.kubernetes.io/gateway: 10.16.0.1
-    ovn.kubernetes.io/ip_address: 10.16.0.2
+    k8s.v1.cni.cncf.io/networks-status: <span class=p>|</span>-
+      <span class=o>[{</span>
+          <span class=s2>&quot;name&quot;</span>: <span class=s2>&quot;kube-ovn&quot;</span>,
+          <span class=s2>&quot;ips&quot;</span>: <span class=o>[</span>
+              <span class=s2>&quot;10.16.0.2&quot;</span>
+          <span class=o>]</span>,
+          <span class=s2>&quot;default&quot;</span>: true,
+          <span class=s2>&quot;dns&quot;</span>: <span class=o>{}</span>
+      <span class=o>}</span>,<span class=o>{</span>
+          <span class=s2>&quot;name&quot;</span>: <span class=s2>&quot;default/test-service&quot;</span>,
+          <span class=s2>&quot;interface&quot;</span>: <span class=s2>&quot;net1&quot;</span>,
+          <span class=s2>&quot;mac&quot;</span>: <span class=s2>&quot;ba:85:f7:02:9f:42&quot;</span>,
+          <span class=s2>&quot;dns&quot;</span>: <span class=o>{}</span>
+      <span class=o>}]</span>
+    ovn.kubernetes.io/allocated: <span class=s2>&quot;true&quot;</span>
+    ovn.kubernetes.io/cidr: <span class=m>10</span>.16.0.0/16
+    ovn.kubernetes.io/gateway: <span class=m>10</span>.16.0.1
+    ovn.kubernetes.io/ip_address: <span class=m>10</span>.16.0.2
     ovn.kubernetes.io/logical_router: ovn-cluster
     ovn.kubernetes.io/logical_switch: ovn-default
-    ovn.kubernetes.io/mac_address: 00:00:00:45:F4:29
+    ovn.kubernetes.io/mac_address: <span class=m>00</span>:00:00:45:F4:29
     ovn.kubernetes.io/pod_nic_type: veth-pair
-    ovn.kubernetes.io/routed: &quot;true&quot;
-    test-service.default.kubernetes.io/allocated: &quot;true&quot;
-    test-service.default.kubernetes.io/cidr: 172.18.0.0/16
-    test-service.default.kubernetes.io/gateway: 172.18.0.1
-    test-service.default.kubernetes.io/ip_address: 172.18.0.18
+    ovn.kubernetes.io/routed: <span class=s2>&quot;true&quot;</span>
+    test-service.default.kubernetes.io/allocated: <span class=s2>&quot;true&quot;</span>
+    test-service.default.kubernetes.io/cidr: <span class=m>172</span>.18.0.0/16
+    test-service.default.kubernetes.io/gateway: <span class=m>172</span>.18.0.1
+    test-service.default.kubernetes.io/ip_address: <span class=m>172</span>.18.0.18
     test-service.default.kubernetes.io/logical_switch: attach-subnet
-    test-service.default.kubernetes.io/mac_address: 00:00:00:AF:AA:BF
+    test-service.default.kubernetes.io/mac_address: <span class=m>00</span>:00:00:AF:AA:BF
     test-service.default.kubernetes.io/pod_nic_type: veth-pair
-</code></pre> <p>查看 Service 的信息：</p> <pre><code class=language-bash># kubectl get svc -o yaml test-service
+</code></pre></div> <p>查看 Service 的信息：</p> <div class=highlight><pre><span></span><code><span class=c1># kubectl get svc -o yaml test-service</span>
 apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {&quot;apiVersion&quot;:&quot;v1&quot;,&quot;kind&quot;:&quot;Service&quot;,&quot;metadata&quot;:{&quot;annotations&quot;:{&quot;test-service.default.kubernetes.io/logical_switch&quot;:&quot;attach-subnet&quot;},&quot;labels&quot;:{&quot;app&quot;:&quot;dynamic&quot;},&quot;name&quot;:&quot;test-service&quot;,&quot;namespace&quot;:&quot;default&quot;},&quot;spec&quot;:{&quot;ports&quot;:[{&quot;name&quot;:&quot;test&quot;,&quot;port&quot;:80,&quot;protocol&quot;:&quot;TCP&quot;,&quot;targetPort&quot;:80}],&quot;selector&quot;:{&quot;app&quot;:&quot;dynamic&quot;},&quot;sessionAffinity&quot;:&quot;None&quot;,&quot;type&quot;:&quot;LoadBalancer&quot;}}
+    kubectl.kubernetes.io/last-applied-configuration: <span class=p>|</span>
+      <span class=o>{</span><span class=s2>&quot;apiVersion&quot;</span>:<span class=s2>&quot;v1&quot;</span>,<span class=s2>&quot;kind&quot;</span>:<span class=s2>&quot;Service&quot;</span>,<span class=s2>&quot;metadata&quot;</span>:<span class=o>{</span><span class=s2>&quot;annotations&quot;</span>:<span class=o>{</span><span class=s2>&quot;test-service.default.kubernetes.io/logical_switch&quot;</span>:<span class=s2>&quot;attach-subnet&quot;</span><span class=o>}</span>,<span class=s2>&quot;labels&quot;</span>:<span class=o>{</span><span class=s2>&quot;app&quot;</span>:<span class=s2>&quot;dynamic&quot;</span><span class=o>}</span>,<span class=s2>&quot;name&quot;</span>:<span class=s2>&quot;test-service&quot;</span>,<span class=s2>&quot;namespace&quot;</span>:<span class=s2>&quot;default&quot;</span><span class=o>}</span>,<span class=s2>&quot;spec&quot;</span>:<span class=o>{</span><span class=s2>&quot;ports&quot;</span>:<span class=o>[{</span><span class=s2>&quot;name&quot;</span>:<span class=s2>&quot;test&quot;</span>,<span class=s2>&quot;port&quot;</span>:80,<span class=s2>&quot;protocol&quot;</span>:<span class=s2>&quot;TCP&quot;</span>,<span class=s2>&quot;targetPort&quot;</span>:80<span class=o>}]</span>,<span class=s2>&quot;selector&quot;</span>:<span class=o>{</span><span class=s2>&quot;app&quot;</span>:<span class=s2>&quot;dynamic&quot;</span><span class=o>}</span>,<span class=s2>&quot;sessionAffinity&quot;</span>:<span class=s2>&quot;None&quot;</span>,<span class=s2>&quot;type&quot;</span>:<span class=s2>&quot;LoadBalancer&quot;</span><span class=o>}}</span>
     ovn.kubernetes.io/vpc: ovn-cluster
     test-service.default.kubernetes.io/logical_switch: attach-subnet
-  creationTimestamp: &quot;2022-06-15T09:01:58Z&quot;
+  creationTimestamp: <span class=s2>&quot;2022-06-15T09:01:58Z&quot;</span>
   labels:
     app: dynamic
   name: test-service
   namespace: default
-  resourceVersion: &quot;38485&quot;
+  resourceVersion: <span class=s2>&quot;38485&quot;</span>
   uid: 161edee1-7f6e-40f5-9e09-5a52c44267d0
 spec:
-  allocateLoadBalancerNodePorts: true
-  clusterIP: 10.109.201.193
+  allocateLoadBalancerNodePorts: <span class=nb>true</span>
+  clusterIP: <span class=m>10</span>.109.201.193
   clusterIPs:
-  - 10.109.201.193
+  - <span class=m>10</span>.109.201.193
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4
   ipFamilyPolicy: SingleStack
   ports:
-  - name: test
-    nodePort: 30056
-    port: 80
+  - name: <span class=nb>test</span>
+    nodePort: <span class=m>30056</span>
+    port: <span class=m>80</span>
     protocol: TCP
-    targetPort: 80
+    targetPort: <span class=m>80</span>
   selector:
     app: dynamic
   sessionAffinity: None
@@ -152,104 +152,104 @@ spec:
 status:
   loadBalancer:
     ingress:
-    - ip: 172.18.0.18
-</code></pre> <h2 id=loadbalancerip>测试 LoadBalancerIP 访问<a class=headerlink href=#loadbalancerip title="Permanent link">&para;</a></h2> <p>参考以下 yaml, 创建测试 Pod，作为 Service 的 Endpoints 提供服务:</p> <pre><code class=language-yaml>apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: dynamic
-  name: dynamic
-  namespace: default
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: dynamic
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
-  template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        app: dynamic
-    spec:
-      containers:
-      - image: qaimages:helloworld
-        imagePullPolicy: IfNotPresent
-        name: qaimages
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-</code></pre> <p>正常情况下，提供的子网地址，在集群外应该可以访问到。为了简单验证，在集群内访问 Service 的 <code>LoadBalancerIP:Port</code>，查看是否正常访问成功。</p> <pre><code class=language-bash># curl 172.18.0.11:80
+    - ip: <span class=m>172</span>.18.0.18
+</code></pre></div> <h2 id=loadbalancerip>测试 LoadBalancerIP 访问<a class=headerlink href=#loadbalancerip title="Permanent link">&para;</a></h2> <p>参考以下 yaml, 创建测试 Pod，作为 Service 的 Endpoints 提供服务: <div class=highlight><pre><span></span><code><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span><span class=w></span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span><span class=w></span>
+<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
+<span class=w>  </span><span class=nt>labels</span><span class=p>:</span><span class=w></span>
+<span class=w>    </span><span class=nt>app</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">dynamic</span><span class=w></span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">dynamic</span><span class=w></span>
+<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">default</span><span class=w></span>
+<span class=nt>spec</span><span class=p>:</span><span class=w></span>
+<span class=w>  </span><span class=nt>replicas</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class=w></span>
+<span class=w>  </span><span class=nt>selector</span><span class=p>:</span><span class=w></span>
+<span class=w>    </span><span class=nt>matchLabels</span><span class=p>:</span><span class=w></span>
+<span class=w>      </span><span class=nt>app</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">dynamic</span><span class=w></span>
+<span class=w>  </span><span class=nt>strategy</span><span class=p>:</span><span class=w></span>
+<span class=w>    </span><span class=nt>rollingUpdate</span><span class=p>:</span><span class=w></span>
+<span class=w>      </span><span class=nt>maxSurge</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">25%</span><span class=w></span>
+<span class=w>      </span><span class=nt>maxUnavailable</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">25%</span><span class=w></span>
+<span class=w>    </span><span class=nt>type</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">RollingUpdate</span><span class=w></span>
+<span class=w>  </span><span class=nt>template</span><span class=p>:</span><span class=w></span>
+<span class=w>    </span><span class=nt>metadata</span><span class=p>:</span><span class=w></span>
+<span class=w>      </span><span class=nt>creationTimestamp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">null</span><span class=w></span>
+<span class=w>      </span><span class=nt>labels</span><span class=p>:</span><span class=w></span>
+<span class=w>        </span><span class=nt>app</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">dynamic</span><span class=w></span>
+<span class=w>    </span><span class=nt>spec</span><span class=p>:</span><span class=w></span>
+<span class=w>      </span><span class=nt>containers</span><span class=p>:</span><span class=w></span>
+<span class=w>      </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">qaimages:helloworld</span><span class=w></span>
+<span class=w>        </span><span class=nt>imagePullPolicy</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span><span class=w></span>
+<span class=w>        </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">qaimages</span><span class=w></span>
+<span class=w>      </span><span class=nt>dnsPolicy</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ClusterFirst</span><span class=w></span>
+<span class=w>      </span><span class=nt>restartPolicy</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Always</span><span class=w></span>
+</code></pre></div></p> <p>正常情况下，提供的子网地址，在集群外应该可以访问到。为了简单验证，在集群内访问 Service 的 <code>LoadBalancerIP:Port</code>，查看是否正常访问成功。 <div class=highlight><pre><span></span><code><span class=c1># curl 172.18.0.11:80</span>
 &lt;html&gt;
 &lt;head&gt;
         &lt;title&gt;Hello World!&lt;/title&gt;
-        &lt;link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'&gt;
+        &lt;link <span class=nv>href</span><span class=o>=</span><span class=s1>&#39;//fonts.googleapis.com/css?family=Open+Sans:400,700&#39;</span> <span class=nv>rel</span><span class=o>=</span><span class=s1>&#39;stylesheet&#39;</span> <span class=nv>type</span><span class=o>=</span><span class=s1>&#39;text/css&#39;</span>&gt;
         &lt;style&gt;
-        body {
-                background-color: white;
-                text-align: center;
-                padding: 50px;
-                font-family: &quot;Open Sans&quot;,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;
-        }
-        #logo {
-                margin-bottom: 40px;
-        }
+        body <span class=o>{</span>
+                background-color: white<span class=p>;</span>
+                text-align: center<span class=p>;</span>
+                padding: 50px<span class=p>;</span>
+                font-family: <span class=s2>&quot;Open Sans&quot;</span>,<span class=s2>&quot;Helvetica Neue&quot;</span>,Helvetica,Arial,sans-serif<span class=p>;</span>
+        <span class=o>}</span>
+        <span class=c1>#logo {</span>
+                margin-bottom: 40px<span class=p>;</span>
+        <span class=o>}</span>
         &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
                 &lt;h1&gt;Hello World!&lt;/h1&gt;
                                 &lt;h3&gt;Links found&lt;/h3&gt;
         &lt;h3&gt;I am on  dynamic-7d8d7874f5-hsgc4&lt;/h3&gt;
-        &lt;h3&gt;Cookie                  =&lt;/h3&gt;
-                                        &lt;b&gt;KUBERNETES&lt;/b&gt; listening in 443 available at tcp://10.96.0.1:443&lt;br /&gt;
+        &lt;h3&gt;Cookie                  <span class=o>=</span>&lt;/h3&gt;
+                                        &lt;b&gt;KUBERNETES&lt;/b&gt; listening <span class=k>in</span> <span class=m>443</span> available at tcp://10.96.0.1:443&lt;br /&gt;
                                                 &lt;h3&gt;my name is hanhouchao!&lt;/h3&gt;
-                        &lt;h3&gt; RequestURI='/'&lt;/h3&gt;
+                        &lt;h3&gt; <span class=nv>RequestURI</span><span class=o>=</span><span class=s1>&#39;/&#39;</span>&lt;/h3&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre> <p>进入 Service 创建的 Pod，查看网络的信息</p> <pre><code class=language-bash># ip a
-4: net1@if62: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default
-    link/ether ba:85:f7:02:9f:42 brd ff:ff:ff:ff:ff:ff link-netnsid 0
-    inet 172.18.0.18/16 scope global net1
+</code></pre></div></p> <p>进入 Service 创建的 Pod，查看网络的信息 <div class=highlight><pre><span></span><code><span class=c1># ip a</span>
+<span class=m>4</span>: net1@if62: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class=m>1500</span> qdisc noqueue state UP group default
+    link/ether ba:85:f7:02:9f:42 brd ff:ff:ff:ff:ff:ff link-netnsid <span class=m>0</span>
+    inet <span class=m>172</span>.18.0.18/16 scope global net1
        valid_lft forever preferred_lft forever
     inet6 fe80::b885:f7ff:fe02:9f42/64 scope link
        valid_lft forever preferred_lft forever
-36: eth0@if37: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1400 qdisc noqueue state UP group default
-    link/ether 00:00:00:45:f4:29 brd ff:ff:ff:ff:ff:ff link-netnsid 0
-    inet 10.16.0.2/16 brd 10.16.255.255 scope global eth0
+<span class=m>36</span>: eth0@if37: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class=m>1400</span> qdisc noqueue state UP group default
+    link/ether <span class=m>00</span>:00:00:45:f4:29 brd ff:ff:ff:ff:ff:ff link-netnsid <span class=m>0</span>
+    inet <span class=m>10</span>.16.0.2/16 brd <span class=m>10</span>.16.255.255 scope global eth0
        valid_lft forever preferred_lft forever
     inet6 fe80::200:ff:fe45:f429/64 scope link
        valid_lft forever preferred_lft forever
 
-# ip rule
-0:  from all lookup local
-32764:  from all iif eth0 lookup 100
-32765:  from all iif net1 lookup 100
-32766:  from all lookup main
-32767:  from all lookup default
+<span class=c1># ip rule</span>
+<span class=m>0</span>:  from all lookup <span class=nb>local</span>
+<span class=m>32764</span>:  from all iif eth0 lookup <span class=m>100</span>
+<span class=m>32765</span>:  from all iif net1 lookup <span class=m>100</span>
+<span class=m>32766</span>:  from all lookup main
+<span class=m>32767</span>:  from all lookup default
 
-# ip route show table 100
-default via 172.18.0.1 dev net1
-10.109.201.193 via 10.16.0.1 dev eth0
-172.18.0.0/16 dev net1 scope link
+<span class=c1># ip route show table 100</span>
+default via <span class=m>172</span>.18.0.1 dev net1
+<span class=m>10</span>.109.201.193 via <span class=m>10</span>.16.0.1 dev eth0
+<span class=m>172</span>.18.0.0/16 dev net1 scope link
 
-# iptables -t nat -L -n -v
-Chain PREROUTING (policy ACCEPT 0 packets, 0 bytes)
- pkts bytes target     prot opt in     out     source               destination
-    0     0 DNAT       tcp  --  *      *       0.0.0.0/0            172.18.0.18          tcp dpt:80 to:10.109.201.193:80
+<span class=c1># iptables -t nat -L -n -v</span>
+Chain PREROUTING <span class=o>(</span>policy ACCEPT <span class=m>0</span> packets, <span class=m>0</span> bytes<span class=o>)</span>
+ pkts bytes target     prot opt <span class=k>in</span>     out     <span class=nb>source</span>               destination
+    <span class=m>0</span>     <span class=m>0</span> DNAT       tcp  --  *      *       <span class=m>0</span>.0.0.0/0            <span class=m>172</span>.18.0.18          tcp dpt:80 to:10.109.201.193:80
 
-Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
- pkts bytes target     prot opt in     out     source               destination
+Chain INPUT <span class=o>(</span>policy ACCEPT <span class=m>0</span> packets, <span class=m>0</span> bytes<span class=o>)</span>
+ pkts bytes target     prot opt <span class=k>in</span>     out     <span class=nb>source</span>               destination
 
-Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
- pkts bytes target     prot opt in     out     source               destination
+Chain OUTPUT <span class=o>(</span>policy ACCEPT <span class=m>0</span> packets, <span class=m>0</span> bytes<span class=o>)</span>
+ pkts bytes target     prot opt <span class=k>in</span>     out     <span class=nb>source</span>               destination
 
-Chain POSTROUTING (policy ACCEPT 0 packets, 0 bytes)
- pkts bytes target     prot opt in     out     source               destination
-    0     0 MASQUERADE  all  --  *      *       0.0.0.0/0            10.109.201.193
-</code></pre> <p><a class=md-button href=http://page.alauda.cn/kubeovn target=_blank><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 4C5.36 4 2 6.69 2 10c0 1.89 1.08 3.56 2.78 4.66L4 17l2.5-1.5c.89.31 1.87.5 2.91.5A5.22 5.22 0 0 1 9 14c0-3.31 3.13-6 7-6 .19 0 .38 0 .56.03C15.54 5.69 12.78 4 9.5 4m-3 2.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m5 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M16 9c-3.31 0-6 2.24-6 5s2.69 5 6 5c.67 0 1.31-.08 1.91-.25L20 20l-.62-1.87C20.95 17.22 22 15.71 22 14c0-2.76-2.69-5-6-5m-2 2.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m4 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1Z"/></svg></span> 微信群</a> <a class=md-button href=https://kube-ovn-slackin.herokuapp.com/ target=_blank><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M6 15a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2h2v2m1 0a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-5m2-8a2 2 0 0 1-2-2 2 2 0 0 1 2-2 2 2 0 0 1 2 2v2H9m0 1a2 2 0 0 1 2 2 2 2 0 0 1-2 2H4a2 2 0 0 1-2-2 2 2 0 0 1 2-2h5m8 2a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2h-2v-2m-1 0a2 2 0 0 1-2 2 2 2 0 0 1-2-2V5a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5m-2 8a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2v-2h2m0-1a2 2 0 0 1-2-2 2 2 0 0 1 2-2h5a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-5Z"/></svg></span> Slack</a> <a class=md-button href=https://twitter.com/KubeOvn target=_blank><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23Z"/></svg></span> Twitter</a> <a class=md-button href=https://ma.alauda.cn/p/2f53a target=_blank><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="m20 8-8 5-8-5V6l8 5 8-5m0-2H4c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z"/></svg></span> Support</a></p> <hr> <div class=md-source-file> <small> 最后更新: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年7月19日</span> <br> 创建日期: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年7月19日</span> </small> </div> <h2 id=__comments>评论</h2> <script src=https://giscus.app/client.js data-repo=kubeovn/kube-ovn data-repo-id="MDEwOlJlcG9zaXRvcnkxNzcwNjg5NjE=" data-category=Announcements data-category-id=DIC_kwDOCo3boc4CAj60 data-mapping=pathname data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=light data-lang=zh-CN crossorigin=anonymous async>
+Chain POSTROUTING <span class=o>(</span>policy ACCEPT <span class=m>0</span> packets, <span class=m>0</span> bytes<span class=o>)</span>
+ pkts bytes target     prot opt <span class=k>in</span>     out     <span class=nb>source</span>               destination
+    <span class=m>0</span>     <span class=m>0</span> MASQUERADE  all  --  *      *       <span class=m>0</span>.0.0.0/0            <span class=m>10</span>.109.201.193
+</code></pre></div></p> <p><a class=md-button href=http://page.alauda.cn/kubeovn target=_blank><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 4C5.36 4 2 6.69 2 10c0 1.89 1.08 3.56 2.78 4.66L4 17l2.5-1.5c.89.31 1.87.5 2.91.5A5.22 5.22 0 0 1 9 14c0-3.31 3.13-6 7-6 .19 0 .38 0 .56.03C15.54 5.69 12.78 4 9.5 4m-3 2.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m5 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M16 9c-3.31 0-6 2.24-6 5s2.69 5 6 5c.67 0 1.31-.08 1.91-.25L20 20l-.62-1.87C20.95 17.22 22 15.71 22 14c0-2.76-2.69-5-6-5m-2 2.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m4 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1Z"/></svg></span> 微信群</a> <a class=md-button href=https://kube-ovn-slackin.herokuapp.com/ target=_blank><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M6 15a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2h2v2m1 0a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-5m2-8a2 2 0 0 1-2-2 2 2 0 0 1 2-2 2 2 0 0 1 2 2v2H9m0 1a2 2 0 0 1 2 2 2 2 0 0 1-2 2H4a2 2 0 0 1-2-2 2 2 0 0 1 2-2h5m8 2a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2h-2v-2m-1 0a2 2 0 0 1-2 2 2 2 0 0 1-2-2V5a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5m-2 8a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2v-2h2m0-1a2 2 0 0 1-2-2 2 2 0 0 1 2-2h5a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-5Z"/></svg></span> Slack</a> <a class=md-button href=https://twitter.com/KubeOvn target=_blank><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23Z"/></svg></span> Twitter</a> <a class=md-button href=https://ma.alauda.cn/p/2f53a target=_blank><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="m20 8-8 5-8-5V6l8 5 8-5m0-2H4c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z"/></svg></span> Support</a></p> <hr> <div class=md-source-file> <small> 最后更新: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年7月19日</span> <br> 创建日期: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年7月19日</span> </small> </div> <h2 id=__comments>评论</h2> <script src=https://giscus.app/client.js data-repo=kubeovn/kube-ovn data-repo-id="MDEwOlJlcG9zaXRvcnkxNzcwNjg5NjE=" data-category=Announcements data-category-id=DIC_kwDOCo3boc4CAj60 data-mapping=pathname data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=light data-lang=zh-CN crossorigin=anonymous async>
 </script> <script>
     var palette = __md_get("__palette")
     if (palette && typeof palette.color === "object")

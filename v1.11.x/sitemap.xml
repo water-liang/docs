@@ -401,6 +401,14 @@
          
     </url>
     <url>
+         <loc>start/sealos-install/</loc>
+         <lastmod>2022-08-10</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="en/start/sealos-install/"/>
+         <xhtml:link rel="alternate" hreflang="zh" href="zh/start/sealos-install/"/>
+         
+    </url>
+    <url>
          <loc>start/underlay/</loc>
          <lastmod>2022-08-10</lastmod>
          <changefreq>daily</changefreq>
