@@ -361,6 +361,14 @@
          
     </url>
     <url>
+         <loc>reference/feature-stage/</loc>
+         <lastmod>2022-08-31</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="en/reference/feature-stage/"/>
+         <xhtml:link rel="alternate" hreflang="zh" href="zh/reference/feature-stage/"/>
+         
+    </url>
+    <url>
          <loc>reference/metrics/</loc>
          <lastmod>2022-08-31</lastmod>
          <changefreq>daily</changefreq>
