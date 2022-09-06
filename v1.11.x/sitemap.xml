@@ -105,14 +105,6 @@
          
     </url>
     <url>
-         <loc>advance/prometheus/</loc>
-         <lastmod>2022-09-06</lastmod>
-         <changefreq>daily</changefreq>
-         <xhtml:link rel="alternate" hreflang="en" href="en/advance/prometheus/"/>
-         <xhtml:link rel="alternate" hreflang="zh" href="zh/advance/prometheus/"/>
-         
-    </url>
-    <url>
          <loc>advance/vip/</loc>
          <lastmod>2022-09-06</lastmod>
          <changefreq>daily</changefreq>
@@ -222,6 +214,14 @@
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="en/guide/prometheus-grafana/"/>
          <xhtml:link rel="alternate" hreflang="zh" href="zh/guide/prometheus-grafana/"/>
+         
+    </url>
+    <url>
+         <loc>guide/prometheus/</loc>
+         <lastmod>2022-09-06</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="en/guide/prometheus/"/>
+         <xhtml:link rel="alternate" hreflang="zh" href="zh/guide/prometheus/"/>
          
     </url>
     <url>
