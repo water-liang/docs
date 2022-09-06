@@ -237,7 +237,7 @@ ct_next<span class=o>(</span><span class=nv>ct_state</span><span class=o>=</span
     output<span class=p>;</span>
 
 ...
-</code></pre></div> <p>若 trace 对象为运行于 Underlay 网络下的虚拟机，您可能需要添加额外参数来指定目的 Mac 地址：</p> <div class=highlight><pre><span></span><code>kubectl ko trace default/virt-handler-7lvml <span class=m>8</span>.8.8.8 <span class=m>82</span>:7c:9f:83:8c:01 icmp
+</code></pre></div> <p>若 trace 对象为运行于 Underlay 网络下的虚拟机，需要添加额外参数来指定目的 Mac 地址：</p> <div class=highlight><pre><span></span><code>kubectl ko trace default/virt-handler-7lvml <span class=m>8</span>.8.8.8 <span class=m>82</span>:7c:9f:83:8c:01 icmp
 </code></pre></div> <h3 id=diagnose-allnode-nodename>diagnose {all|node} [nodename]<a class=headerlink href=#diagnose-allnode-nodename title="Permanent link">&para;</a></h3> <p>诊断集群网络组件状态，并去对应节点的 <code>kube-ovn-pinger</code> 检测当前节点到其他节点和关键服务的连通性和网络延迟：</p> <div class=highlight><pre><span></span><code><span class=c1># kubectl ko diagnose all</span>
 switch c7cd17e8-ceee-4a91-9bb3-e5a313fe1ece <span class=o>(</span>snat<span class=o>)</span>
     port snat-ovn-cluster
