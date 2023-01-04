@@ -6,66 +6,66 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hm, s);
 })();
-</script> <a href=https://github.com/kubeovn/docs/edit/master/docs/guide/eip-snat.md title=编辑此页 class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a> <h1 id=eip-snat>EIP 和 SNAT 配置<a class=headerlink href=#eip-snat title="Permanent link">&para;</a></h1> <blockquote> <p>该配置针对默认 VPC 下的网络，用户自定义 VPC 请参考 <a href=../vpc/#vpc_2>VPC 网关</a></p> </blockquote> <p>Kube-OVN 支持利用 OVN 中的 L3 Gateway 功能来实现 Pod 级别的 SNAT 和 EIP 功能。 通过使用 SNAT，一组 Pod 可以共享一个 IP 地址对外进行访问。 通过 EIP 的功能，一个 Pod 可以直接和一个外部 IP 关联， 外部服务可以通过 EIP 直接访问 Pod，Pod 也将通过这个 EIP 访问外部服务。</p> <p><img alt src=../../static/eip-snat.png></p> <h2 id=_1>准备工作<a class=headerlink href=#_1 title="Permanent link">&para;</a></h2> <ul> <li>为了使用 OVN 的 L3 Gateway 能力，必须将一个单独的网卡接入 OVS 网桥中进行 Overlay 和 Underlay 网络的打通， 主机必须有其他的网卡用于运维管理。</li> <li>由于经过 NAT 后的数据包会直接进入 Underlay 网络，必须确认当前的网络架构下此类数据包可以安全通过。</li> <li>目前 EIP 和 SNAT 地址没有冲突检测，需要管理员手动分配避免地址冲突。</li> </ul> <h2 id=_2>创建配置文件<a class=headerlink href=#_2 title="Permanent link">&para;</a></h2> <p>在 <code>kube-system</code> 下创建 ConfigMap <code>ovn-external-gw-config</code>：</p> <div class=highlight><pre><span></span><code><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class=w></span>
-<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ovn-external-gw-config</span><span class=w></span>
-<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span><span class=w></span>
-<span class=nt>data</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>enable-external-gw</span><span class=p>:</span><span class=w> </span><span class=s>&quot;true&quot;</span><span class=w></span>
-<span class=w>  </span><span class=nt>external-gw-nodes</span><span class=p>:</span><span class=w> </span><span class=s>&quot;kube-ovn-worker&quot;</span><span class=w></span>
-<span class=w>  </span><span class=nt>external-gw-nic</span><span class=p>:</span><span class=w> </span><span class=s>&quot;eth1&quot;</span><span class=w></span>
-<span class=w>  </span><span class=nt>external-gw-addr</span><span class=p>:</span><span class=w> </span><span class=s>&quot;172.56.0.1/16&quot;</span><span class=w></span>
-<span class=w>  </span><span class=nt>nic-ip</span><span class=p>:</span><span class=w> </span><span class=s>&quot;172.56.0.254/16&quot;</span><span class=w></span>
-<span class=w>  </span><span class=nt>nic-mac</span><span class=p>:</span><span class=w> </span><span class=s>&quot;16:52:f3:13:6a:25&quot;</span><span class=w></span>
+</script> <a href=https://github.com/kubeovn/docs/edit/master/docs/guide/eip-snat.md title=编辑此页 class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a> <h1 id=eip-snat>EIP 和 SNAT 配置<a class=headerlink href=#eip-snat title="Permanent link">&para;</a></h1> <blockquote> <p>该配置针对默认 VPC 下的网络，用户自定义 VPC 请参考 <a href=../vpc/#vpc_2>VPC 网关</a></p> </blockquote> <p>Kube-OVN 支持利用 OVN 中的 L3 Gateway 功能来实现 Pod 级别的 SNAT 和 EIP 功能。 通过使用 SNAT，一组 Pod 可以共享一个 IP 地址对外进行访问。 通过 EIP 的功能，一个 Pod 可以直接和一个外部 IP 关联， 外部服务可以通过 EIP 直接访问 Pod，Pod 也将通过这个 EIP 访问外部服务。</p> <p><img alt src=../../static/eip-snat.png></p> <h2 id=_1>准备工作<a class=headerlink href=#_1 title="Permanent link">&para;</a></h2> <ul> <li>为了使用 OVN 的 L3 Gateway 能力，必须将一个单独的网卡接入 OVS 网桥中进行 Overlay 和 Underlay 网络的打通， 主机必须有其他的网卡用于运维管理。</li> <li>由于经过 NAT 后的数据包会直接进入 Underlay 网络，必须确认当前的网络架构下此类数据包可以安全通过。</li> <li>目前 EIP 和 SNAT 地址没有冲突检测，需要管理员手动分配避免地址冲突。</li> </ul> <h2 id=_2>创建配置文件<a class=headerlink href=#_2 title="Permanent link">&para;</a></h2> <p>在 <code>kube-system</code> 下创建 ConfigMap <code>ovn-external-gw-config</code>：</p> <div class=highlight><pre><span></span><code><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ovn-external-gw-config</span>
+<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span>
+<span class=nt>data</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>enable-external-gw</span><span class=p>:</span><span class=w> </span><span class=s>&quot;true&quot;</span>
+<span class=w>  </span><span class=nt>external-gw-nodes</span><span class=p>:</span><span class=w> </span><span class=s>&quot;kube-ovn-worker&quot;</span>
+<span class=w>  </span><span class=nt>external-gw-nic</span><span class=p>:</span><span class=w> </span><span class=s>&quot;eth1&quot;</span>
+<span class=w>  </span><span class=nt>external-gw-addr</span><span class=p>:</span><span class=w> </span><span class=s>&quot;172.56.0.1/16&quot;</span>
+<span class=w>  </span><span class=nt>nic-ip</span><span class=p>:</span><span class=w> </span><span class=s>&quot;172.56.0.254/16&quot;</span>
+<span class=w>  </span><span class=nt>nic-mac</span><span class=p>:</span><span class=w> </span><span class=s>&quot;16:52:f3:13:6a:25&quot;</span>
 </code></pre></div> <ul> <li><code>enable-external-gw</code>: 是否开启 SNAT 和 EIP 功能。</li> <li><code>type</code>: <code>centrailized</code> 或 <code>distributed</code>， 默认为 <code>centralized</code> 如果使用 <code>distributed</code>，则集群所有节点都需要有同名网卡来承担网关功能。</li> <li><code>external-gw-nodes</code>: <code>centralized</code> 模式下，承担网关作用的节点名，逗号分隔。</li> <li><code>external-gw-nic</code>: 节点上承担网关作用的网卡名。</li> <li><code>external-gw-addr</code>: 物理网络网关的 IP 和掩码。</li> <li><code>nic-ip</code>,<code>nic-mac</code>: 分配给逻辑网关端口的 IP 和 Mac，需为物理段未被占用的 IP 和 Mac。</li> </ul> <h2 id=ovn-ovs>观察 OVN 和 OVS 状态确认配置生效<a class=headerlink href=#ovn-ovs title="Permanent link">&para;</a></h2> <p>检查 OVN-NB 状态, 确认 <code>ovn-external</code> 逻辑交换机存在，并且 <code>ovn-cluster-ovn-external</code> 逻辑路由器端口上 绑定了正确的地址和 chassis。</p> <div class=highlight><pre><span></span><code><span class=c1># kubectl ko nbctl show</span>
-switch 3de4cea7-1a71-43f3-8b62-435a57ef16a6 <span class=o>(</span>ovn-external<span class=o>)</span>
-    port ln-ovn-external
-        type: localnet
-        addresses: <span class=o>[</span><span class=s2>&quot;unknown&quot;</span><span class=o>]</span>
-    port ovn-external-ovn-cluster
-        type: router
-        router-port: ovn-cluster-ovn-external
-router e1eb83ad-34be-4ed5-9a02-fcc8b1d357c4 <span class=o>(</span>ovn-cluster<span class=o>)</span>
-    port ovn-cluster-ovn-external
-        mac: <span class=s2>&quot;ac:1f:6b:2d:33:f1&quot;</span>
-        networks: <span class=o>[</span><span class=s2>&quot;172.56.0.100/16&quot;</span><span class=o>]</span>
-        gateway chassis: <span class=o>[</span>a5682814-2e2c-46dd-9c1c-6803ef0dab66<span class=o>]</span>
+switch<span class=w> </span>3de4cea7-1a71-43f3-8b62-435a57ef16a6<span class=w> </span><span class=o>(</span>ovn-external<span class=o>)</span>
+<span class=w>    </span>port<span class=w> </span>ln-ovn-external
+<span class=w>        </span>type:<span class=w> </span>localnet
+<span class=w>        </span>addresses:<span class=w> </span><span class=o>[</span><span class=s2>&quot;unknown&quot;</span><span class=o>]</span>
+<span class=w>    </span>port<span class=w> </span>ovn-external-ovn-cluster
+<span class=w>        </span>type:<span class=w> </span>router
+<span class=w>        </span>router-port:<span class=w> </span>ovn-cluster-ovn-external
+router<span class=w> </span>e1eb83ad-34be-4ed5-9a02-fcc8b1d357c4<span class=w> </span><span class=o>(</span>ovn-cluster<span class=o>)</span>
+<span class=w>    </span>port<span class=w> </span>ovn-cluster-ovn-external
+<span class=w>        </span>mac:<span class=w> </span><span class=s2>&quot;ac:1f:6b:2d:33:f1&quot;</span>
+<span class=w>        </span>networks:<span class=w> </span><span class=o>[</span><span class=s2>&quot;172.56.0.100/16&quot;</span><span class=o>]</span>
+<span class=w>        </span>gateway<span class=w> </span>chassis:<span class=w> </span><span class=o>[</span>a5682814-2e2c-46dd-9c1c-6803ef0dab66<span class=o>]</span>
 </code></pre></div> <p>检查 OVS 状态，确认相应的网卡已经桥接进 <code>br-external</code> 网桥：</p> <div class=highlight><pre><span></span><code><span class=c1># kubectl ko vsctl ${gateway node name} show</span>
 e7d81150-7743-4d6e-9e6f-5c688232e130
-    Bridge br-external
-        Port br-external
-            Interface br-external
-                type: internal
-        Port eno2
-            Interface eno2
-        Port patch-ln-ovn-external-to-br-int
-            Interface patch-ln-ovn-external-to-br-int
-                type: patch
-                options: <span class=o>{</span><span class=nv>peer</span><span class=o>=</span>patch-br-int-to-ln-ovn-external<span class=o>}</span>
-</code></pre></div> <h2 id=pod-eip-snat>Pod 配置 EIP 和 SNAT<a class=headerlink href=#pod-eip-snat title="Permanent link">&para;</a></h2> <p>可通过在 Pod 上增加 <code>ovn.kubernetes.io/snat</code> 或 <code>ovn.kubernetes.io/eip</code> annotation 来分别配置 SNAT 和 EIP：</p> <div class=highlight><pre><span></span><code><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class=w></span>
-<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">pod-gw</span><span class=w></span>
-<span class=w>  </span><span class=nt>annotations</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>ovn.kubernetes.io/snat</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">172.56.0.200</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>containers</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">snat-pod</span><span class=w></span>
-<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">nginx:alpine</span><span class=w></span>
-<span class=nn>---</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class=w></span>
-<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">pod-gw</span><span class=w></span>
-<span class=w>  </span><span class=nt>annotations</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>ovn.kubernetes.io/eip</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">172.56.0.233</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>containers</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eip-pod</span><span class=w></span>
-<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">nginx:alpine</span><span class=w></span>
-</code></pre></div> <p>可通过 kubectl 或其他工具动态调整 Pod 所配置的 EIP 或 SNAT 规则，更改时请注意要同时删除 <code>ovn.kubernetes.io/routed</code> annotation 触发路由的变更：</p> <div class=highlight><pre><span></span><code>kubectl annotate pod pod-gw ovn.kubernetes.io/eip<span class=o>=</span><span class=m>172</span>.56.0.221 --overwrite
-kubectl annotate pod pod-gw ovn.kubernetes.io/routed-
+<span class=w>    </span>Bridge<span class=w> </span>br-external
+<span class=w>        </span>Port<span class=w> </span>br-external
+<span class=w>            </span>Interface<span class=w> </span>br-external
+<span class=w>                </span>type:<span class=w> </span>internal
+<span class=w>        </span>Port<span class=w> </span>eno2
+<span class=w>            </span>Interface<span class=w> </span>eno2
+<span class=w>        </span>Port<span class=w> </span>patch-ln-ovn-external-to-br-int
+<span class=w>            </span>Interface<span class=w> </span>patch-ln-ovn-external-to-br-int
+<span class=w>                </span>type:<span class=w> </span>patch
+<span class=w>                </span>options:<span class=w> </span><span class=o>{</span><span class=nv>peer</span><span class=o>=</span>patch-br-int-to-ln-ovn-external<span class=o>}</span>
+</code></pre></div> <h2 id=pod-eip-snat>Pod 配置 EIP 和 SNAT<a class=headerlink href=#pod-eip-snat title="Permanent link">&para;</a></h2> <p>可通过在 Pod 上增加 <code>ovn.kubernetes.io/snat</code> 或 <code>ovn.kubernetes.io/eip</code> annotation 来分别配置 SNAT 和 EIP：</p> <div class=highlight><pre><span></span><code><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">pod-gw</span>
+<span class=w>  </span><span class=nt>annotations</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>ovn.kubernetes.io/snat</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">172.56.0.200</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>containers</span><span class=p>:</span>
+<span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">snat-pod</span>
+<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">nginx:alpine</span>
+<span class=nn>---</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">pod-gw</span>
+<span class=w>  </span><span class=nt>annotations</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>ovn.kubernetes.io/eip</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">172.56.0.233</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>containers</span><span class=p>:</span>
+<span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eip-pod</span>
+<span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">nginx:alpine</span>
+</code></pre></div> <p>可通过 kubectl 或其他工具动态调整 Pod 所配置的 EIP 或 SNAT 规则，更改时请注意要同时删除 <code>ovn.kubernetes.io/routed</code> annotation 触发路由的变更：</p> <div class=highlight><pre><span></span><code>kubectl<span class=w> </span>annotate<span class=w> </span>pod<span class=w> </span>pod-gw<span class=w> </span>ovn.kubernetes.io/eip<span class=o>=</span><span class=m>172</span>.56.0.221<span class=w> </span>--overwrite
+kubectl<span class=w> </span>annotate<span class=w> </span>pod<span class=w> </span>pod-gw<span class=w> </span>ovn.kubernetes.io/routed-
 </code></pre></div> <h2 id=_3>高级配置<a class=headerlink href=#_3 title="Permanent link">&para;</a></h2> <p><code>kube-ovn-controller</code> 的部分启动参数可对 SNAT 和 EIP 功能进行高阶配置：</p> <ul> <li><code>--external-gateway-config-ns</code>: Configmap <code>ovn-external-gw-config</code> 所属 Namespace， 默认为 <code>kube-system</code>。</li> <li><code>--external-gateway-net</code>: 物理网卡所桥接的网桥名，默认为 <code>external</code>。</li> <li><code>--external-gateway-vlanid</code>: 物理网络 Vlan Tag 号，默认为 0， 即不使用 Vlan。</li> </ul> <p><a class=md-button href=https://ma.alauda.cn/p/0f39a target=_blank><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 4C5.36 4 2 6.69 2 10c0 1.89 1.08 3.56 2.78 4.66L4 17l2.5-1.5c.89.31 1.87.5 2.91.5A5.22 5.22 0 0 1 9 14c0-3.31 3.13-6 7-6 .19 0 .38 0 .56.03C15.54 5.69 12.78 4 9.5 4m-3 2.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m5 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M16 9c-3.31 0-6 2.24-6 5s2.69 5 6 5c.67 0 1.31-.08 1.91-.25L20 20l-.62-1.87C20.95 17.22 22 15.71 22 14c0-2.76-2.69-5-6-5m-2 2.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m4 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1Z"/></svg></span> 微信群</a> <a class=md-button href=https://kube-ovn-slackin.herokuapp.com/ target=_blank><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M6 15a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2h2v2m1 0a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-5m2-8a2 2 0 0 1-2-2 2 2 0 0 1 2-2 2 2 0 0 1 2 2v2H9m0 1a2 2 0 0 1 2 2 2 2 0 0 1-2 2H4a2 2 0 0 1-2-2 2 2 0 0 1 2-2h5m8 2a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2h-2v-2m-1 0a2 2 0 0 1-2 2 2 2 0 0 1-2-2V5a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5m-2 8a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2v-2h2m0-1a2 2 0 0 1-2-2 2 2 0 0 1 2-2h5a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-5Z"/></svg></span> Slack</a> <a class=md-button href=https://twitter.com/KubeOvn target=_blank><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23Z"/></svg></span> Twitter</a> <a class=md-button href=https://ma.alauda.cn/p/2f53a target=_blank><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="m20 8-8 5-8-5V6l8 5 8-5m0-2H4c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z"/></svg></span> Support</a></p> <hr> <div class=md-source-file> <small> 最后更新: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年6月25日</span> <br> 创建日期: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2022年5月24日</span> </small> </div> <h2 id=__comments>评论</h2> <script src=https://giscus.app/client.js data-repo=kubeovn/kube-ovn data-repo-id="MDEwOlJlcG9zaXRvcnkxNzcwNjg5NjE=" data-category=Announcements data-category-id=DIC_kwDOCo3boc4CAj60 data-mapping=pathname data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=light data-lang=zh-CN crossorigin=anonymous async>
 </script> <script>
     var palette = __md_get("__palette")

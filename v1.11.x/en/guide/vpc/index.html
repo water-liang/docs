@@ -6,195 +6,195 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0];
   s.parentNode.insertBefore(hm, s);
 })();
-</script> <a href=https://github.com/kubeovn/docs/edit/master/docs/guide/vpc.en.md title="Edit this page" class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a> <h1 id=config-vpc>Config VPC<a class=headerlink href=#config-vpc title="Permanent link">&para;</a></h1> <p>Kube-OVN supports multi-tenant isolation level VPC networks. Different VPC networks are independent of each other and can be configured separately with Subnet CIDRs, routing policies, security policies, outbound gateways, EIP, etc.</p> <blockquote> <p>VPC is mainly used in scenarios where there requires strong isolation of multi-tenant networks and some Kubernetes networking features conflict under multi-tenant networks. For example, node and pod access, NodePort functionality, network access-based health checks, and DNS capabilities are not supported in multi-tenant network scenarios at this time. In order to facilitate common Kubernetes usage scenarios, Kube-OVN has a special design for the default VPC where the Subnet under the VPC can meet the Kubernetes specification. The custom VPC supports static routing, EIP and NAT gateways as described in this document. Common isolation requirements can be achieved through network policies and Subnet ACLs under the default VPC, so before using a custom VPC, please make sure whether you need VPC-level isolation and understand the limitations under the custom VPC.</p> </blockquote> <p><img alt src=../../static/network-topology.png></p> <h2 id=creating-custom-vpcs>Creating Custom VPCs<a class=headerlink href=#creating-custom-vpcs title="Permanent link">&para;</a></h2> <p>Create two VPCs:</p> <p><div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Vpc</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">test-vpc-1</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>namespaces</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ns1</span><span class=w></span>
-<span class=nn>---</span><span class=w></span>
-<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Vpc</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">test-vpc-2</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>namespaces</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ns2</span><span class=w></span>
-</code></pre></div> - <code>namespaces</code>: Limit which namespaces can use this VPC. If empty, all namespaces can use this VPC.</p> <p>Create two Subnets, belonging to two different VPCs and having the same CIDR:</p> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Subnet</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">net1</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>vpc</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">test-vpc-1</span><span class=w></span>
-<span class=w>  </span><span class=nt>cidrBlock</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.0/24</span><span class=w></span>
-<span class=w>  </span><span class=nt>protocol</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IPv4</span><span class=w></span>
-<span class=w>  </span><span class=nt>namespaces</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ns1</span><span class=w></span>
-<span class=nn>---</span><span class=w></span>
-<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Subnet</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">net2</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>vpc</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">test-vpc-2</span><span class=w></span>
-<span class=w>  </span><span class=nt>cidrBlock</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.0/24</span><span class=w></span>
-<span class=w>  </span><span class=nt>protocol</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IPv4</span><span class=w></span>
-<span class=w>  </span><span class=nt>namespaces</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ns2</span><span class=w></span>
-</code></pre></div> <p>Create Pods under two separate Namespaces:</p> <div class=highlight><pre><span></span><code><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class=w></span>
-<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>annotations</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>ovn.kubernetes.io/logical_switch</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">net1</span><span class=w></span>
-<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ns1</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">vpc1-pod</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>containers</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">vpc1-pod</span><span class=w></span>
-<span class=w>      </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">nginx:alpine</span><span class=w></span>
-<span class=nn>---</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class=w></span>
-<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>annotations</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class=nt>ovn.kubernetes.io/logical_switch</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">net2</span><span class=w></span>
-<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ns2</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">vpc2-pod</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>containers</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">vpc2-pod</span><span class=w></span>
-<span class=w>      </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">nginx:alpine</span><span class=w></span>
-</code></pre></div> <p>After running successfully, you can observe that the two Pod addresses belong to the same CIDR, but the two Pods cannot access each other because they are running on different tenant VPCs.</p> <h2 id=create-vpc-nat-gateway>Create VPC NAT Gateway<a class=headerlink href=#create-vpc-nat-gateway title="Permanent link">&para;</a></h2> <blockquote> <p>Subnets under custom VPCs do not support distributed gateways and centralized gateways under default VPCs.</p> </blockquote> <p>Pod access to the external network within the VPC requires a VPC gateway, which bridges the physical and tenant networks and provides floating IP, SNAT and DNAT capabilities.</p> <p>The VPC gateway function relies on Multus-CNI function, please refer to <a href=https://github.com/k8snetworkplumbingwg/multus-cni/blob/master/docs/quickstart.md target=target>multus-cni</a>.</p> <h3 id=configuring-the-external-network>Configuring the External Network<a class=headerlink href=#configuring-the-external-network title="Permanent link">&para;</a></h3> <div class=highlight><pre><span></span><code><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
-<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Subnet</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ovn-vpc-external-network</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>protocol</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IPv4</span><span class=w></span>
-<span class=w>  </span><span class=nt>provider</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ovn-vpc-external-network.kube-system</span><span class=w></span>
-<span class=w>  </span><span class=nt>cidrBlock</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">192.168.0.0/24</span><span class=w></span>
-<span class=w>  </span><span class=nt>gateway</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">192.168.0.1</span><span class=w>  </span><span class=c1># IP address of the physical gateway</span><span class=w></span>
-<span class=w>  </span><span class=nt>excludeIps</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">192.168.0.1..192.168.0.10</span><span class=w></span>
-<span class=nn>---</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=s>&quot;k8s.cni.cncf.io/v1&quot;</span><span class=w></span>
-<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">NetworkAttachmentDefinition</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ovn-vpc-external-network</span><span class=w></span>
-<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>config</span><span class=p>:</span><span class=w> </span><span class=s>&#39;{</span><span class=w></span>
-<span class=w>      </span><span class=s>&quot;cniVersion&quot;:</span><span class=nv> </span><span class=s>&quot;0.3.0&quot;,</span><span class=w></span>
-<span class=w>      </span><span class=s>&quot;type&quot;:</span><span class=nv> </span><span class=s>&quot;macvlan&quot;,</span><span class=w></span>
-<span class=w>      </span><span class=s>&quot;master&quot;:</span><span class=nv> </span><span class=s>&quot;eth1&quot;,</span><span class=w></span>
-<span class=w>      </span><span class=s>&quot;mode&quot;:</span><span class=nv> </span><span class=s>&quot;bridge&quot;</span><span class=w></span>
-<span class=w>    </span><span class=s>}&#39;</span><span class=w></span>
-</code></pre></div> <ul> <li>This Subnet is used to manage the available external addresses, so please communicate with your network management to give you the available physical segment IPs.</li> <li>The VPC gateway uses Macvlan for physical network configuration, and <code>master</code> of <code>NetworkAttachmentDefinition</code> should be the NIC name of the corresponding physical network NIC.</li> <li><code>name</code> must be <code>ovn-vpc-external-network</code>.</li> </ul> <h3 id=enabling-the-vpc-gateway>Enabling the VPC Gateway<a class=headerlink href=#enabling-the-vpc-gateway title="Permanent link">&para;</a></h3> <p>VPC gateway functionality needs to be enabled via <code>ovn-vpc-nat-gw-config</code> under <code>kube-system</code>:</p> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ovn-vpc-nat-gw-config</span><span class=w></span>
-<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span><span class=w></span>
-<span class=nt>data</span><span class=p>:</span><span class=w></span>
+</script> <a href=https://github.com/kubeovn/docs/edit/master/docs/guide/vpc.en.md title="Edit this page" class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a> <h1 id=config-vpc>Config VPC<a class=headerlink href=#config-vpc title="Permanent link">&para;</a></h1> <p>Kube-OVN supports multi-tenant isolation level VPC networks. Different VPC networks are independent of each other and can be configured separately with Subnet CIDRs, routing policies, security policies, outbound gateways, EIP, etc.</p> <blockquote> <p>VPC is mainly used in scenarios where there requires strong isolation of multi-tenant networks and some Kubernetes networking features conflict under multi-tenant networks. For example, node and pod access, NodePort functionality, network access-based health checks, and DNS capabilities are not supported in multi-tenant network scenarios at this time. In order to facilitate common Kubernetes usage scenarios, Kube-OVN has a special design for the default VPC where the Subnet under the VPC can meet the Kubernetes specification. The custom VPC supports static routing, EIP and NAT gateways as described in this document. Common isolation requirements can be achieved through network policies and Subnet ACLs under the default VPC, so before using a custom VPC, please make sure whether you need VPC-level isolation and understand the limitations under the custom VPC.</p> </blockquote> <p><img alt src=../../static/network-topology.png></p> <h2 id=creating-custom-vpcs>Creating Custom VPCs<a class=headerlink href=#creating-custom-vpcs title="Permanent link">&para;</a></h2> <p>Create two VPCs:</p> <p><div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Vpc</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">test-vpc-1</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>namespaces</span><span class=p>:</span>
+<span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ns1</span>
+<span class=nn>---</span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Vpc</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">test-vpc-2</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>namespaces</span><span class=p>:</span>
+<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ns2</span>
+</code></pre></div> - <code>namespaces</code>: Limit which namespaces can use this VPC. If empty, all namespaces can use this VPC.</p> <p>Create two Subnets, belonging to two different VPCs and having the same CIDR:</p> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Subnet</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">net1</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>vpc</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">test-vpc-1</span>
+<span class=w>  </span><span class=nt>cidrBlock</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.0/24</span>
+<span class=w>  </span><span class=nt>protocol</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IPv4</span>
+<span class=w>  </span><span class=nt>namespaces</span><span class=p>:</span>
+<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ns1</span>
+<span class=nn>---</span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Subnet</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">net2</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>vpc</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">test-vpc-2</span>
+<span class=w>  </span><span class=nt>cidrBlock</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.0/24</span>
+<span class=w>  </span><span class=nt>protocol</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IPv4</span>
+<span class=w>  </span><span class=nt>namespaces</span><span class=p>:</span>
+<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ns2</span>
+</code></pre></div> <p>Create Pods under two separate Namespaces:</p> <div class=highlight><pre><span></span><code><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>annotations</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>ovn.kubernetes.io/logical_switch</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">net1</span>
+<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ns1</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">vpc1-pod</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>containers</span><span class=p>:</span>
+<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">vpc1-pod</span>
+<span class=w>      </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">nginx:alpine</span>
+<span class=nn>---</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>annotations</span><span class=p>:</span>
+<span class=w>    </span><span class=nt>ovn.kubernetes.io/logical_switch</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">net2</span>
+<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ns2</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">vpc2-pod</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>containers</span><span class=p>:</span>
+<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">vpc2-pod</span>
+<span class=w>      </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">nginx:alpine</span>
+</code></pre></div> <p>After running successfully, you can observe that the two Pod addresses belong to the same CIDR, but the two Pods cannot access each other because they are running on different tenant VPCs.</p> <h2 id=create-vpc-nat-gateway>Create VPC NAT Gateway<a class=headerlink href=#create-vpc-nat-gateway title="Permanent link">&para;</a></h2> <blockquote> <p>Subnets under custom VPCs do not support distributed gateways and centralized gateways under default VPCs.</p> </blockquote> <p>Pod access to the external network within the VPC requires a VPC gateway, which bridges the physical and tenant networks and provides floating IP, SNAT and DNAT capabilities.</p> <p>The VPC gateway function relies on Multus-CNI function, please refer to <a href=https://github.com/k8snetworkplumbingwg/multus-cni/blob/master/docs/quickstart.md target=target>multus-cni</a>.</p> <h3 id=configuring-the-external-network>Configuring the External Network<a class=headerlink href=#configuring-the-external-network title="Permanent link">&para;</a></h3> <div class=highlight><pre><span></span><code><span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Subnet</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ovn-vpc-external-network</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>protocol</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IPv4</span>
+<span class=w>  </span><span class=nt>provider</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ovn-vpc-external-network.kube-system</span>
+<span class=w>  </span><span class=nt>cidrBlock</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">192.168.0.0/24</span>
+<span class=w>  </span><span class=nt>gateway</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">192.168.0.1</span><span class=w>  </span><span class=c1># IP address of the physical gateway</span>
+<span class=w>  </span><span class=nt>excludeIps</span><span class=p>:</span>
+<span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">192.168.0.1..192.168.0.10</span>
+<span class=nn>---</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class=s>&quot;k8s.cni.cncf.io/v1&quot;</span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">NetworkAttachmentDefinition</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ovn-vpc-external-network</span>
+<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>config</span><span class=p>:</span><span class=w> </span><span class=s>&#39;{</span>
+<span class=w>      </span><span class=s>&quot;cniVersion&quot;:</span><span class=nv> </span><span class=s>&quot;0.3.0&quot;,</span>
+<span class=w>      </span><span class=s>&quot;type&quot;:</span><span class=nv> </span><span class=s>&quot;macvlan&quot;,</span>
+<span class=w>      </span><span class=s>&quot;master&quot;:</span><span class=nv> </span><span class=s>&quot;eth1&quot;,</span>
+<span class=w>      </span><span class=s>&quot;mode&quot;:</span><span class=nv> </span><span class=s>&quot;bridge&quot;</span>
+<span class=w>    </span><span class=s>}&#39;</span>
+</code></pre></div> <ul> <li>This Subnet is used to manage the available external addresses, so please communicate with your network management to give you the available physical segment IPs.</li> <li>The VPC gateway uses Macvlan for physical network configuration, and <code>master</code> of <code>NetworkAttachmentDefinition</code> should be the NIC name of the corresponding physical network NIC.</li> <li><code>name</code> must be <code>ovn-vpc-external-network</code>.</li> </ul> <h3 id=enabling-the-vpc-gateway>Enabling the VPC Gateway<a class=headerlink href=#enabling-the-vpc-gateway title="Permanent link">&para;</a></h3> <p>VPC gateway functionality needs to be enabled via <code>ovn-vpc-nat-gw-config</code> under <code>kube-system</code>:</p> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ovn-vpc-nat-gw-config</span>
+<span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span>
+<span class=nt>data</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=s>&#39;kubeovn/vpc-nat-gateway:v1.11.0&#39;</span><span class=w> </span>
-<span class=w>  </span><span class=nt>enable-vpc-nat-gw</span><span class=p>:</span><span class=w> </span><span class=s>&#39;true&#39;</span><span class=w></span>
-</code></pre></div> <ul> <li><code>image</code>: The image used by the Gateway Pod.</li> <li><code>enable-vpc-nat-gw</code>: Controls whether the VPC Gateway feature is enabled.</li> </ul> <h3 id=create-vpc-gateway-and-set-the-default-route>Create VPC Gateway and Set the Default Route<a class=headerlink href=#create-vpc-gateway-and-set-the-default-route title="Permanent link">&para;</a></h3> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">VpcNatGateway</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gw1</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>vpc</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">test-vpc-1</span><span class=w></span>
-<span class=w>  </span><span class=nt>subnet</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">net1</span><span class=w></span>
-<span class=w>  </span><span class=nt>lanIp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.254</span><span class=w></span>
-<span class=w>  </span><span class=nt>selector</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=s>&quot;kubernetes.io/hostname:</span><span class=nv> </span><span class=s>kube-ovn-worker&quot;</span><span class=w></span>
-<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=s>&quot;kubernetes.io/os:</span><span class=nv> </span><span class=s>linux&quot;</span><span class=w></span>
-</code></pre></div> <ul> <li><code>subnet</code>: A Subnet within the VPC, the VPC Gateway Pod will use <code>lanIp</code> to connect to the tenant network under that subnet.</li> <li><code>lanIp</code>: An unused IP within the <code>subnet</code> that the VPC Gateway Pod will eventually use for the Pod.</li> <li><code>selector</code>: Node selector for the VPC Gateway Pod.</li> <li><code>nextHopIP</code>: Needs to be the same as <code>lanIp</code>.</li> </ul> <h3 id=create-eip>Create EIP<a class=headerlink href=#create-eip title="Permanent link">&para;</a></h3> <p>EIP allows for floating IP, SNAT, and DNAT operations after assigning an IP from an external network segment to a VPC gateway.</p> <p>Randomly assign an address to the EIP:</p> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesEIP</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eip-random</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>natGwDp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gw1</span><span class=w></span>
-</code></pre></div> <p>Fixed EIP address assignment:</p> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesEIP</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eip-static</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>natGwDp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gw1</span><span class=w></span>
-<span class=w>  </span><span class=nt>v4ip</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.111</span><span class=w></span>
-</code></pre></div> <h3 id=create-dnat-rules>Create DNAT Rules<a class=headerlink href=#create-dnat-rules title="Permanent link">&para;</a></h3> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesEIP</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eipd01</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>natGwDp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gw1</span><span class=w></span>
+<span class=w>  </span><span class=nt>enable-vpc-nat-gw</span><span class=p>:</span><span class=w> </span><span class=s>&#39;true&#39;</span>
+</code></pre></div> <ul> <li><code>image</code>: The image used by the Gateway Pod.</li> <li><code>enable-vpc-nat-gw</code>: Controls whether the VPC Gateway feature is enabled.</li> </ul> <h3 id=create-vpc-gateway-and-set-the-default-route>Create VPC Gateway and Set the Default Route<a class=headerlink href=#create-vpc-gateway-and-set-the-default-route title="Permanent link">&para;</a></h3> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">VpcNatGateway</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gw1</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>vpc</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">test-vpc-1</span>
+<span class=w>  </span><span class=nt>subnet</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">net1</span>
+<span class=w>  </span><span class=nt>lanIp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.254</span>
+<span class=w>  </span><span class=nt>selector</span><span class=p>:</span>
+<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=s>&quot;kubernetes.io/hostname:</span><span class=nv> </span><span class=s>kube-ovn-worker&quot;</span>
+<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=s>&quot;kubernetes.io/os:</span><span class=nv> </span><span class=s>linux&quot;</span>
+</code></pre></div> <ul> <li><code>subnet</code>: A Subnet within the VPC, the VPC Gateway Pod will use <code>lanIp</code> to connect to the tenant network under that subnet.</li> <li><code>lanIp</code>: An unused IP within the <code>subnet</code> that the VPC Gateway Pod will eventually use for the Pod.</li> <li><code>selector</code>: Node selector for the VPC Gateway Pod.</li> <li><code>nextHopIP</code>: Needs to be the same as <code>lanIp</code>.</li> </ul> <h3 id=create-eip>Create EIP<a class=headerlink href=#create-eip title="Permanent link">&para;</a></h3> <p>EIP allows for floating IP, SNAT, and DNAT operations after assigning an IP from an external network segment to a VPC gateway.</p> <p>Randomly assign an address to the EIP:</p> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesEIP</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eip-random</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>natGwDp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gw1</span>
+</code></pre></div> <p>Fixed EIP address assignment:</p> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesEIP</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eip-static</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>natGwDp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gw1</span>
+<span class=w>  </span><span class=nt>v4ip</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.111</span>
+</code></pre></div> <h3 id=create-dnat-rules>Create DNAT Rules<a class=headerlink href=#create-dnat-rules title="Permanent link">&para;</a></h3> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesEIP</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eipd01</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>natGwDp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gw1</span>
 
-<span class=nn>---</span><span class=w></span>
-<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesDnatRule</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">dnat01</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
+<span class=nn>---</span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesDnatRule</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">dnat01</span>
+<span class=nt>spec</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>eip</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eipd01</span><span class=w> </span>
-<span class=w>  </span><span class=nt>externalPort</span><span class=p>:</span><span class=w> </span><span class=s>&#39;8888&#39;</span><span class=w></span>
-<span class=w>  </span><span class=nt>internalIp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.10</span><span class=w></span>
-<span class=w>  </span><span class=nt>internalPort</span><span class=p>:</span><span class=w> </span><span class=s>&#39;80&#39;</span><span class=w></span>
-<span class=w>  </span><span class=nt>protocol</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">tcp</span><span class=w></span>
-</code></pre></div> <h3 id=create-snat-rules>Create SNAT Rules<a class=headerlink href=#create-snat-rules title="Permanent link">&para;</a></h3> <div class=highlight><pre><span></span><code><span class=nn>---</span><span class=w></span>
-<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesEIP</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eips01</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>natGwDp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gw1</span><span class=w></span>
-<span class=nn>---</span><span class=w></span>
-<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesSnatRule</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">snat01</span><span class=w></span>
-<span class="l l-Scalar l-Scalar-Plain">spec</span><span class=w></span>
-<span class=w>  </span><span class="l l-Scalar l-Scalar-Plain">eip</span><span class="p p-Indicator">:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eips01</span><span class=w></span>
-<span class=w>  </span><span class="l l-Scalar l-Scalar-Plain">internalCIDR</span><span class="p p-Indicator">:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.0/24</span><span class=w></span>
-</code></pre></div> <h3 id=create-floating-ip>Create Floating IP<a class=headerlink href=#create-floating-ip title="Permanent link">&para;</a></h3> <div class=highlight><pre><span></span><code><span class=nn>---</span><span class=w></span>
-<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesEIP</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eipf01</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>natGwDp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gw1</span><span class=w></span>
+<span class=w>  </span><span class=nt>externalPort</span><span class=p>:</span><span class=w> </span><span class=s>&#39;8888&#39;</span>
+<span class=w>  </span><span class=nt>internalIp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.10</span>
+<span class=w>  </span><span class=nt>internalPort</span><span class=p>:</span><span class=w> </span><span class=s>&#39;80&#39;</span>
+<span class=w>  </span><span class=nt>protocol</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">tcp</span>
+</code></pre></div> <h3 id=create-snat-rules>Create SNAT Rules<a class=headerlink href=#create-snat-rules title="Permanent link">&para;</a></h3> <div class=highlight><pre><span></span><code><span class=nn>---</span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesEIP</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eips01</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>natGwDp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gw1</span>
+<span class=nn>---</span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesSnatRule</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">snat01</span>
+<span class="l l-Scalar l-Scalar-Plain">spec</span>
+<span class=w>  </span><span class="l l-Scalar l-Scalar-Plain">eip</span><span class="p p-Indicator">:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eips01</span>
+<span class=w>  </span><span class="l l-Scalar l-Scalar-Plain">internalCIDR</span><span class="p p-Indicator">:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.0/24</span>
+</code></pre></div> <h3 id=create-floating-ip>Create Floating IP<a class=headerlink href=#create-floating-ip title="Permanent link">&para;</a></h3> <div class=highlight><pre><span></span><code><span class=nn>---</span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesEIP</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eipf01</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>natGwDp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">gw1</span>
 
-<span class=nn>---</span><span class=w></span>
-<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesFIPRule</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">fip01</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>eip</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eipf01</span><span class=w></span>
-<span class=w>  </span><span class=nt>internalIp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.5</span><span class=w></span>
-</code></pre></div> <h2 id=custom-routing>Custom Routing<a class=headerlink href=#custom-routing title="Permanent link">&para;</a></h2> <p>Within the custom VPC, users can customize the routing rules within the VPC and combine it with the gateway for more flexible forwarding. Kube-OVN supports static routes and more flexible policy routes.</p> <h3 id=static-routes>Static Routes<a class=headerlink href=#static-routes title="Permanent link">&para;</a></h3> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Vpc</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">test-vpc-1</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>staticRoutes</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>cidr</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">0.0.0.0/0</span><span class=w></span>
-<span class=w>      </span><span class=nt>nextHopIP</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.254</span><span class=w></span>
-<span class=w>      </span><span class=nt>policy</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">policyDst</span><span class=w></span>
-<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>cidr</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">172.31.0.0/24</span><span class=w></span>
-<span class=w>      </span><span class=nt>nextHopIP</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.253</span><span class=w></span>
-<span class=w>      </span><span class=nt>policy</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">policySrc</span><span class=w></span>
-</code></pre></div> <ul> <li><code>policy</code>: Supports destination routing <code>policyDst</code> and source routing <code>policySrc</code>.</li> <li>When there are overlapping routing rules, the rule with the longer CIDR mask has higher priority, and if the mask length is the same, the destination route has a higher priority over the source route.</li> </ul> <h3 id=policy-routes>Policy Routes<a class=headerlink href=#policy-routes title="Permanent link">&para;</a></h3> <p>Traffic matched by static routes can be controlled at a finer granularity by policy routing. Policy routing provides more precise matching rules, priority control and more forwarding actions. This feature brings the OVN internal logical router policy function directly to the outside world, for more information on its use, please refer to <a href=https://man7.org/linux/man-pages/man5/ovn-nb.5.html#Logical_Router_Policy_TABLE target=target>Logical Router Policy</a>.</p> <p>A example of policy routes:</p> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Vpc</span><span class=w></span>
-<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span><span class=w></span>
-<span class=nt>metadata</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">test-vpc-1</span><span class=w></span>
-<span class=nt>spec</span><span class=p>:</span><span class=w></span>
-<span class=w>  </span><span class=nt>policyRoutes</span><span class=p>:</span><span class=w></span>
-<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>action</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">drop</span><span class=w></span>
-<span class=w>      </span><span class=nt>match</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ip4.src==10.0.1.0/24 &amp;&amp; ip4.dst==10.0.1.250</span><span class=w></span>
-<span class=w>      </span><span class=nt>priority</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">11</span><span class=w></span>
-<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>action</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">reroute</span><span class=w></span>
-<span class=w>      </span><span class=nt>match</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ip4.src==10.0.1.0/24</span><span class=w></span>
-<span class=w>      </span><span class=nt>nextHopIP</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.252</span><span class=w></span>
-<span class=w>      </span><span class=nt>priority</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class=w></span>
+<span class=nn>---</span>
+<span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesFIPRule</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">fip01</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>eip</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eipf01</span>
+<span class=w>  </span><span class=nt>internalIp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.5</span>
+</code></pre></div> <h2 id=custom-routing>Custom Routing<a class=headerlink href=#custom-routing title="Permanent link">&para;</a></h2> <p>Within the custom VPC, users can customize the routing rules within the VPC and combine it with the gateway for more flexible forwarding. Kube-OVN supports static routes and more flexible policy routes.</p> <h3 id=static-routes>Static Routes<a class=headerlink href=#static-routes title="Permanent link">&para;</a></h3> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Vpc</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">test-vpc-1</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>staticRoutes</span><span class=p>:</span>
+<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>cidr</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">0.0.0.0/0</span>
+<span class=w>      </span><span class=nt>nextHopIP</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.254</span>
+<span class=w>      </span><span class=nt>policy</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">policyDst</span>
+<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>cidr</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">172.31.0.0/24</span>
+<span class=w>      </span><span class=nt>nextHopIP</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.253</span>
+<span class=w>      </span><span class=nt>policy</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">policySrc</span>
+</code></pre></div> <ul> <li><code>policy</code>: Supports destination routing <code>policyDst</code> and source routing <code>policySrc</code>.</li> <li>When there are overlapping routing rules, the rule with the longer CIDR mask has higher priority, and if the mask length is the same, the destination route has a higher priority over the source route.</li> </ul> <h3 id=policy-routes>Policy Routes<a class=headerlink href=#policy-routes title="Permanent link">&para;</a></h3> <p>Traffic matched by static routes can be controlled at a finer granularity by policy routing. Policy routing provides more precise matching rules, priority control and more forwarding actions. This feature brings the OVN internal logical router policy function directly to the outside world, for more information on its use, please refer to <a href=https://man7.org/linux/man-pages/man5/ovn-nb.5.html#Logical_Router_Policy_TABLE target=target>Logical Router Policy</a>.</p> <p>A example of policy routes:</p> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">Vpc</span>
+<span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
+<span class=nt>metadata</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">test-vpc-1</span>
+<span class=nt>spec</span><span class=p>:</span>
+<span class=w>  </span><span class=nt>policyRoutes</span><span class=p>:</span>
+<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>action</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">drop</span>
+<span class=w>      </span><span class=nt>match</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ip4.src==10.0.1.0/24 &amp;&amp; ip4.dst==10.0.1.250</span>
+<span class=w>      </span><span class=nt>priority</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">11</span>
+<span class=w>    </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>action</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">reroute</span>
+<span class=w>      </span><span class=nt>match</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ip4.src==10.0.1.0/24</span>
+<span class=w>      </span><span class=nt>nextHopIP</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.252</span>
+<span class=w>      </span><span class=nt>priority</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
 </code></pre></div> <p><a class=md-button href=https://ma.alauda.cn/p/0f39a target=_blank><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 4C5.36 4 2 6.69 2 10c0 1.89 1.08 3.56 2.78 4.66L4 17l2.5-1.5c.89.31 1.87.5 2.91.5A5.22 5.22 0 0 1 9 14c0-3.31 3.13-6 7-6 .19 0 .38 0 .56.03C15.54 5.69 12.78 4 9.5 4m-3 2.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m5 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1M16 9c-3.31 0-6 2.24-6 5s2.69 5 6 5c.67 0 1.31-.08 1.91-.25L20 20l-.62-1.87C20.95 17.22 22 15.71 22 14c0-2.76-2.69-5-6-5m-2 2.5a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1m4 0a1 1 0 0 1 1 1 1 1 0 0 1-1 1 1 1 0 0 1-1-1 1 1 0 0 1 1-1Z"/></svg></span> 微信群</a> <a class=md-button href=https://kube-ovn-slackin.herokuapp.com/ target=_blank><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M6 15a2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2h2v2m1 0a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-5m2-8a2 2 0 0 1-2-2 2 2 0 0 1 2-2 2 2 0 0 1 2 2v2H9m0 1a2 2 0 0 1 2 2 2 2 0 0 1-2 2H4a2 2 0 0 1-2-2 2 2 0 0 1 2-2h5m8 2a2 2 0 0 1 2-2 2 2 0 0 1 2 2 2 2 0 0 1-2 2h-2v-2m-1 0a2 2 0 0 1-2 2 2 2 0 0 1-2-2V5a2 2 0 0 1 2-2 2 2 0 0 1 2 2v5m-2 8a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2v-2h2m0-1a2 2 0 0 1-2-2 2 2 0 0 1 2-2h5a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-5Z"/></svg></span> Slack</a> <a class=md-button href=https://twitter.com/KubeOvn target=_blank><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23Z"/></svg></span> Twitter</a> <a class=md-button href=https://ma.alauda.cn/p/2f53a target=_blank><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="m20 8-8 5-8-5V6l8 5 8-5m0-2H4c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z"/></svg></span> Support</a></p> <hr> <div class=md-source-file> <small> Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 6, 2022</span> <br> Created: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 30, 2022</span> </small> </div> <h2 id=__comments>Comments</h2> <script src=https://giscus.app/client.js data-repo=kubeovn/kube-ovn data-repo-id="MDEwOlJlcG9zaXRvcnkxNzcwNjg5NjE=" data-category=Announcements data-category-id=DIC_kwDOCo3boc4CAj60 data-mapping=pathname data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=light data-lang=en crossorigin=anonymous async>
 </script> <script>
     var palette = __md_get("__palette")
