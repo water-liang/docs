@@ -417,11 +417,11 @@
          
     </url>
     <url>
-         <loc>Nonereference/kube-ovn-pinger-args.en/</loc>
+         <loc>Nonereference/kube-ovn-pinger-args/</loc>
          <lastmod>2023-02-23</lastmod>
          <changefreq>daily</changefreq>
-         
-         <xhtml:link rel="alternate" hreflang="zh" href="Nonezh/reference/kube-ovn-pinger-args.en/"/>
+         <xhtml:link rel="alternate" hreflang="en" href="Noneen/reference/kube-ovn-pinger-args/"/>
+         <xhtml:link rel="alternate" hreflang="zh" href="Nonezh/reference/kube-ovn-pinger-args/"/>
          
     </url>
     <url>
