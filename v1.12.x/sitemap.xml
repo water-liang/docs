@@ -313,6 +313,14 @@
          
     </url>
     <url>
+         <loc>Noneguide/vpc-eip-qos/</loc>
+         <lastmod>2023-04-11</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="Noneen/guide/vpc-eip-qos/"/>
+         <xhtml:link rel="alternate" hreflang="zh" href="Nonezh/guide/vpc-eip-qos/"/>
+         
+    </url>
+    <url>
          <loc>Noneguide/vpc/</loc>
          <lastmod>2023-04-11</lastmod>
          <changefreq>daily</changefreq>
