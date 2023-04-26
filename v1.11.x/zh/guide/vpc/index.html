@@ -100,7 +100,7 @@ var _hmt = _hmt || [];
 <span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ovn-vpc-nat-gw-config</span>
 <span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span>
 <span class=nt>data</span><span class=p>:</span>
-<span class=w>  </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=s>&#39;kubeovn/vpc-nat-gateway:v1.11.1&#39;</span><span class=w> </span>
+<span class=w>  </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=s>&#39;kubeovn/vpc-nat-gateway:v1.11.3&#39;</span><span class=w> </span>
 <span class=w>  </span><span class=nt>enable-vpc-nat-gw</span><span class=p>:</span><span class=w> </span><span class=s>&#39;true&#39;</span>
 </code></pre></div></p> <ul> <li><code>image</code>: 网关 Pod 所使用的镜像。</li> <li><code>enable-vpc-nat-gw</code>： 控制是否启用 VPC 网关功能。</li> </ul> <h3 id=vpc_4>创建 VPC 网关并配置默认路由<a class=headerlink href=#vpc_4 title="Permanent link">&para;</a></h3> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">VpcNatGateway</span>
 <span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
