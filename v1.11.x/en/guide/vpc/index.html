@@ -100,7 +100,7 @@ var _hmt = _hmt || [];
 <span class=w>  </span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ovn-vpc-nat-gw-config</span>
 <span class=w>  </span><span class=nt>namespace</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kube-system</span>
 <span class=nt>data</span><span class=p>:</span>
-<span class=w>  </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=s>&#39;kubeovn/vpc-nat-gateway:v1.11.3&#39;</span><span class=w> </span>
+<span class=w>  </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=s>&#39;docker.io/kubeovn/vpc-nat-gateway:v1.11.3&#39;</span><span class=w> </span>
 <span class=w>  </span><span class=nt>enable-vpc-nat-gw</span><span class=p>:</span><span class=w> </span><span class=s>&#39;true&#39;</span>
 </code></pre></div> <ul> <li><code>image</code>: The image used by the Gateway Pod.</li> <li><code>enable-vpc-nat-gw</code>: Controls whether the VPC Gateway feature is enabled.</li> </ul> <h3 id=create-vpc-gateway-and-set-the-default-route>Create VPC Gateway and Set the Default Route<a class=headerlink href=#create-vpc-gateway-and-set-the-default-route title="Permanent link">&para;</a></h3> <div class=highlight><pre><span></span><code><span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">VpcNatGateway</span>
 <span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
