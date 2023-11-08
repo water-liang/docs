@@ -175,12 +175,12 @@ Route<span class=w> </span>Table<span class=w> </span>&lt;main&gt;:
 <span class=nt>spec</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>namespaces</span><span class=p>:</span>
 <span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">vpc1</span>
-<span class=w>  </span><span class=nt>staticRoutes</span><span class=p>:</span><span class=w>         </span><span class=c1># 配置路由规则：vpc下的某个子网需要基于哪一个额外的公网网络的路由需要手动添加，以下示例仅供参考，用户需根据自己的实际情况进行配置</span>
+<span class=w>  </span><span class=nt>staticRoutes</span><span class=p>:</span><span class=w>         </span><span class=c1># 配置路由规则：vpc 下的某个子网需要基于哪一个额外的公网网络的路由需要手动添加，以下示例仅供参考，用户需根据自己的实际情况进行配置</span>
 <span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class=nt>cidr</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">192.168.0.1/28</span>
 <span class=w>    </span><span class=nt>nextHopIP</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.10.204.254</span>
 <span class=w>    </span><span class=nt>policy</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">policySrc</span>
-<span class=w>  </span><span class=nt>enableExternal</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class=w>  </span><span class=c1># 开启enableExternal后vpc会自动连接名为external的ls</span>
-<span class=w>  </span><span class=nt>addExternalSubnets</span><span class=p>:</span><span class=w>   </span><span class=c1># 配置addExternalSubnets支持连接多个额外的公网网络</span>
+<span class=w>  </span><span class=nt>enableExternal</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class=w>  </span><span class=c1># 开启 enableExternal 后 vpc 会自动连接名为 external 的 ls</span>
+<span class=w>  </span><span class=nt>addExternalSubnets</span><span class=p>:</span><span class=w> </span><span class=c1># 配置 addExternalSubnets 支持连接多个额外的公网网络</span>
 <span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">extra</span>
 </code></pre></div> <p>以上模板应用后，应该可以看到如下资源存在</p> <div class=highlight><pre><span></span><code><span class=c1># k ko nbctl show vpc1</span>
 router<span class=w> </span>87ad06fd-71d5-4ff8-a1f0-54fa3bba1a7f<span class=w> </span><span class=o>(</span>vpc1<span class=o>)</span>
@@ -198,10 +198,10 @@ router<span class=w> </span>87ad06fd-71d5-4ff8-a1f0-54fa3bba1a7f<span class=w> <
 </code></pre></div> <div class=highlight><pre><span></span><code><span class=c1># k ko nbctl lr-route-list vpc1</span>
 IPv4<span class=w> </span>Routes
 Route<span class=w> </span>Table<span class=w> </span>&lt;main&gt;:
-<span class=w>                </span><span class=m>192</span>.168.0.1/28<span class=w>         </span><span class=m>10</span>.10.204.254<span class=w> </span>src-ip
+<span class=w>    </span><span class=m>192</span>.168.0.1/28<span class=w>         </span><span class=m>10</span>.10.204.254<span class=w> </span>src-ip
 <span class=w>                </span><span class=m>0</span>.0.0.0/0<span class=w>              </span><span class=m>10</span>.5.204.254<span class=w>  </span>dst-ip
 <span class=c1># 目前会为默认公网网络配置默认路由</span>
-<span class=c1># 额外公网网络需要在vpc手动配置路由，上述实例中源IP地址为192.168.0.1/28会转发至额外公网网络</span>
+<span class=c1># 额外公网网络需要在 vpc 手动配置路由，上述实例中源 IP 地址为 192.168.0.1/28 会转发至额外公网网络</span>
 <span class=c1># 用户可根据情况手动配置路由规则</span>
 </code></pre></div> <h2 id=2-ovn-eip>2. ovn-eip<a class=headerlink href=#2-ovn-eip title="Permanent link">&para;</a></h2> <p>该功能和 iptables-eip 设计和使用方式基本一致，ovn-eip 目前有三种 type</p> <ul> <li>nat: 是指 ovn dnat，fip, snat 这三种 nat 资源类型</li> <li>lrp: 软路由基于该端口和 underlay 公网互联，该 lrp 端口的 ip 可以被其他 dnat snat 复用</li> <li>lsp: 用于 ovn 基于 bfd 的 ecmp 静态路由场景，在网关节点上提供一个 ovs internal port 作为 ecmp 路由的下一跳</li> </ul> <div class=highlight><pre><span></span><code>---
 kind:<span class=w> </span>OvnEip

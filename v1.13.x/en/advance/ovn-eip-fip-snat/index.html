@@ -178,7 +178,7 @@ Route<span class=w> </span>Table<span class=w> </span>&lt;main&gt;:
 <span class=w>    </span><span class=nt>nextHopIP</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.10.204.254</span>
 <span class=w>    </span><span class=nt>policy</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">policySrc</span>
 <span class=w>  </span><span class=nt>enableExternal</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class=w>  </span><span class=c1># vpc enableExternal will automatically create an lrp association to the public network specified above</span>
-<span class=w>  </span><span class=nt>addExternalSubnets</span><span class=p>:</span><span class=w>   </span><span class=c1># configure addExternalSubnets to support connecting multiple additional public networks</span>
+<span class=w>  </span><span class=nt>addExternalSubnets</span><span class=p>:</span><span class=w> </span><span class=c1># configure addExternalSubnets to support connecting multiple additional public networks</span>
 <span class=w>  </span><span class="p p-Indicator">-</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">extra</span>
 </code></pre></div> <p>After the above template is applied, you should see the following resources exist</p> <div class=highlight><pre><span></span><code><span class=c1># k ko nbctl show vpc1</span>
 <span class="l l-Scalar l-Scalar-Plain">router 87ad06fd-71d5-4ff8-a1f0-54fa3bba1a7f (vpc1)</span>
@@ -196,7 +196,7 @@ Route<span class=w> </span>Table<span class=w> </span>&lt;main&gt;:
 </code></pre></div> <div class=highlight><pre><span></span><code><span class=c1># k ko nbctl lr-route-list vpc1</span>
 IPv4<span class=w> </span>Routes
 Route<span class=w> </span>Table<span class=w> </span>&lt;main&gt;:
-<span class=w>                </span><span class=m>192</span>.168.0.1/28<span class=w>         </span><span class=m>10</span>.10.204.254<span class=w> </span>src-ip
+<span class=w>    </span><span class=m>192</span>.168.0.1/28<span class=w>         </span><span class=m>10</span>.10.204.254<span class=w> </span>src-ip
 <span class=w>                </span><span class=m>0</span>.0.0.0/0<span class=w>              </span><span class=m>10</span>.5.204.254<span class=w>  </span>dst-ip
 <span class=c1># The route currently supports automatic maintenance</span>
 <span class=c1># Additional public networks require manual routing configuration in the vpc. In the above example, the source IP address is 192.168.0.1/28 and will be forwarded to the additional public network.</span>
