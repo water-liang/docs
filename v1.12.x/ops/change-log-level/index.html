@@ -9,7 +9,7 @@ var _hmt = _hmt || [];
 </script> <h1 id=_1>调整日志等级<a class=headerlink href=#_1 title="Permanent link">&para;</a></h1> <p>打开 <code>kube-ovn.yaml</code>，在服务启动脚本的参数列表中设置 log 等级，比如：</p> <div class=highlight><pre><span></span><code>vi<span class=w> </span>kube-ovn.yaml
 <span class=c1># ...</span>
 <span class=w>        </span>-<span class=w> </span>name:<span class=w> </span>kube-ovn-controller
-<span class=w>          </span>image:<span class=w> </span><span class=s2>&quot;docker.io/kubeovn/kube-ovn:v1.12.5&quot;</span>
+<span class=w>          </span>image:<span class=w> </span><span class=s2>&quot;docker.io/kubeovn/kube-ovn:v1.12.6&quot;</span>
 <span class=w>          </span>imagePullPolicy:<span class=w> </span>IfNotPresent
 <span class=w>          </span>args:
 <span class=w>          </span>-<span class=w> </span>/kube-ovn/start-controller.sh
