@@ -156,7 +156,7 @@ var _hmt = _hmt || [];
 <span class=nt>spec</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>eip</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eips01</span>
 <span class=w>  </span><span class=nt>internalCIDR</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.0/24</span>
-</code></pre></div> <p>自定义路由规则请参考<a href=#_2>自定义路由</a>。</p> <h3 id=ip>创建浮动 IP<a class=headerlink href=#ip title="Permanent link">&para;</a></h3> <p>通过浮动 IP 规则配合自定义路由规则，VPC 内的一个 IP 会和 EIP 进行完全映射，外部可以通过这个 EIP 访问 VPC 内的 IP，VPC 内的这个 IP 访问外部地址时也会 SNAT 成这个 EIP。</p> <div class=highlight><pre><span></span><code><span class=nn>---</span>
+</code></pre></div> <p>自定义路由规则请参考<a href=#_3>自定义路由</a>。</p> <h3 id=ip>创建浮动 IP<a class=headerlink href=#ip title="Permanent link">&para;</a></h3> <p>通过浮动 IP 规则配合自定义路由规则，VPC 内的一个 IP 会和 EIP 进行完全映射，外部可以通过这个 EIP 访问 VPC 内的 IP，VPC 内的这个 IP 访问外部地址时也会 SNAT 成这个 EIP。</p> <div class=highlight><pre><span></span><code><span class=nn>---</span>
 <span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">IptablesEIP</span>
 <span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">kubeovn.io/v1</span>
 <span class=nt>metadata</span><span class=p>:</span>
@@ -172,7 +172,7 @@ var _hmt = _hmt || [];
 <span class=nt>spec</span><span class=p>:</span>
 <span class=w>  </span><span class=nt>eip</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">eipf01</span>
 <span class=w>  </span><span class=nt>internalIp</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">10.0.1.5</span>
-</code></pre></div> <p>自定义路由规则请参考<a href=#_2>自定义路由</a>。</p> <h3 id=_2>更改网关镜像<a class=headerlink href=#_2 title="Permanent link">&para;</a></h3> <p>VPC 网关所使用的镜像可以通过 <code>kube-system</code> Namespace 下的 <code>ovn-vpc-nat-config</code> ConfigMap 进行调整：</p> <div class=highlight><pre><span></span><code><span class=nn>---</span>
+</code></pre></div> <p>自定义路由规则请参考<a href=#_3>自定义路由</a>。</p> <h3 id=_2>更改网关镜像<a class=headerlink href=#_2 title="Permanent link">&para;</a></h3> <p>VPC 网关所使用的镜像可以通过 <code>kube-system</code> Namespace 下的 <code>ovn-vpc-nat-config</code> ConfigMap 进行调整：</p> <div class=highlight><pre><span></span><code><span class=nn>---</span>
 <span class=nt>kind</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
 <span class=nt>apiVersion</span><span class=p>:</span><span class=w> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class=nt>metadata</span><span class=p>:</span>
