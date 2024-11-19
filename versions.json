@@ -8,10 +8,10 @@
   },
   {
     "version": "v1.12.x",
-    "title": "v1.12.x (current)",
+    "title": "v1.12.x",
     "aliases": [
-      "current",
-      "stable"
+      "stable",
+      "current"
     ]
   },
   {
